@@ -1,0 +1,34 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-4 fos_user_user_show profile__info">
+            <h4> Mon espace abonné :</h4>
+            <p>Login: {{ user.username }}</p>
+            <p>Email: {{ user.email }}</p>
+            <p> <a href=" {{ path('fos_user_security_logout') }}">Se deconnecter</a></p>
+        </div>
+
+        <div class="col-md-1"></div>
+
+        <div class="col-md-7 profile__notification">
+
+            <h4> Mes messages :</h4>
+
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-offset-5 col-md-7 profile__zoneTexte">
+
+            <h4> Ecris ton message :</h4>
+            <div class="clo-xs-4">
+                <textarea class="form-control" rows="3" placeholder="Crypt ton octet ici ..." maxlength="255"></textarea>
+                <input class="btn btn-primary btn-send center" value="Envoyer" />
+            </div>
+        </div>
+
+    </div>

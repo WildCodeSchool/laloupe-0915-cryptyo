@@ -1,9 +1,10 @@
 .banniere {
     min-height:80px;
-    background-color: #51626F;
+    background-color: #81B3CC;
     margin-bottom: 20px;
     padding-top: 10px;
-    color: whitesmoke;
+    padding-bottom: 10px;
+    color: white;
 }
 
 .btn-inscr {
@@ -11,8 +12,97 @@
     padding-left: 50px!important;
     padding-right: 50px;
 }
+.btn-send {
+    padding-left: 10px!important;
+    padding-right: 10px;
+    width: 20%;
+    display: block;
+    margin: 0 auto;
+    margin-top: 10px;
+}
 
 .home__form {
     text-align: right;
     color: black;
+    background-color: #88C3E0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.header__logo {
+    width: 80px;
+    margin-top: 2px;
+    margin-left: 20px;
+    float: left;
+}
+
+.header__logged {
+    background-color: #88C3E0;
+    text-align: center;
+}
+
+.header__logged h3{
+    color: white;
+    margin-top: 10px;
+}
+.header__logout {
+    background-color: #88C3E0;
+    text-align: center;
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+.header__logout a{
+    color: white;
+    font-size: 1.5em;
+}
+
+
+
+@font-face {
+    font-family: 'logo__font';
+    src: url('../fonts/logo__header.ttf');
+}
+.logo {
+    font-family: 'logo__font', 'Roboto', sans-serif;
+}
+body {
+    font-family: 'Roboto', sans-serif;
+}
+.banniere input {
+    background-color: white!important;
+    -webkit-box-shadow: 0 0 0px 1000px white inset;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    padding-left: 5px;
+}
+.banniere .home__form label {
+    color: white;
+}
+.banniere .home__form button{
+    width: 187px;
+}
+
+.profile__info{
+    background-color: #E4F5FD;
+    min-height: 100px;
+    padding: 10px;
+}
+
+.profile__info h4, .profile__notification h4, .profile__zoneTexte h4{
+    text-align: center;
+    text-decoration: underline;
+    margin-bottom: 20px;
+}
+.profile__info p {
+    line-height: 12px;
+}
+.profile__notification {
+    background-color: #E4F5FD;
+    min-height: 200px;
+    padding: 10px;
+}
+.profile__zoneTexte {
+    background-color: #E4F5FD;
+    margin-top: 20px;
+    padding: 10px;
 }
