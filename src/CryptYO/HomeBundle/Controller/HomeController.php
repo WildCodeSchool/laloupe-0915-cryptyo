@@ -16,4 +16,5 @@ class HomeController extends Controller
     {
         return $this->render('CryptYOHomeBundle:Home:index.html.twig');
     }
+    
 }
