@@ -12,6 +12,14 @@
     padding-left: 50px!important;
     padding-right: 50px;
 }
+.btn-send {
+    padding-left: 10px!important;
+    padding-right: 10px;
+    width: 20%;
+    display: block;
+    margin: 0 auto;
+    margin-top: 10px;
+}
 
 .home__form {
     text-align: right;
@@ -80,7 +88,7 @@ body {
     padding: 10px;
 }
 
-.profile__info h4, .profile__notification h4{
+.profile__info h4, .profile__notification h4, .profile__zoneTexte h4{
     text-align: center;
     text-decoration: underline;
     margin-bottom: 20px;
@@ -91,5 +99,10 @@ body {
 .profile__notification {
     background-color: #E4F5FD;
     min-height: 200px;
+    padding: 10px;
+}
+.profile__zoneTexte {
+    background-color: #E4F5FD;
+    margin-top: 20px;
     padding: 10px;
 }
