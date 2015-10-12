@@ -21,6 +21,7 @@
                 <div class="col-md-4 home__form">
                     <form action="{{ path("fos_user_security_check") }}" method="post">
                         <input type="hidden" name="_csrf_token" value="{{ fos_csrf_provider.generateCsrfToken('authenticate') }}" />
+                        
                         <label>Nom d'utilisateur :</label>
                         <input type="text" name="_username" required="required" />
 

@@ -1,5 +1,7 @@
 <?php
 
+date_default_timezone_get('Europe/Paris');
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Debug\Debug;
 
