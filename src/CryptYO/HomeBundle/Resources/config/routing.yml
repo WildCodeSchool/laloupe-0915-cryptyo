@@ -1,3 +1,7 @@
 crypt_yo_home_homepage:
     path:     /
     defaults: { _controller: CryptYOHomeBundle:Home:index }
+
+crypt_yo_home_send_message:
+    path:     /send_message
+    defaults: { _controller: CryptYOHomeBundle:Message:send }
