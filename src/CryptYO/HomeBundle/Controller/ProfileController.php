@@ -22,6 +22,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use CryptYO\HomeBundle\Entity\Message;
+use CryptYO\HomeBundle\Form\Type\MessageType;
 
 /**
  * Controller managing the user profile
@@ -32,6 +33,11 @@ class ProfileController extends BaseController
 {
     public function showAction()
     {
+        $form = $this->createForm(new MessageType(), new Message(), array(
+            'action' => $this->generateUrl('crypt_yo_home_send_message'),
+            'method' => 'POST'
+        ));
+
         $user = $this->getUser();
         if (!is_object($user) || !$user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');
@@ -39,7 +45,22 @@ class ProfileController extends BaseController
 
         return $this->render('FOSUserBundle:Profile:show.html.twig', array(
             'user' => $user,
+            'form' => $form->createView(),
         ));
+    }
+
+    public function createMessageAction(Request $request)
+    {
+        $message = new Message();
+        $form = $this->createForm(new MessageType(), $message);
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($message);
+            $em->flush();
+
+        }
+        return $this->redirect($this->generateUrl('fos_user_profile_show'));
     }
 
 
