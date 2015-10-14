@@ -22,9 +22,9 @@ class Message
     private $id;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="auteur", type="integer")
+     * @ORM\Column(name="auteur", type="text")
      */
     private $auteur;
 
@@ -34,6 +34,13 @@ class Message
      * @ORM\Column(name="message", type="text")
      */
     private $message;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="destinataire", type="text")
+     */
+    private $destinataire;
 
 
     /**
@@ -49,7 +56,7 @@ class Message
     /**
      * Set auteur
      *
-     * @param integer $auteur
+     * @param string $auteur
      *
      * @return Message
      */
@@ -63,7 +70,7 @@ class Message
     /**
      * Get auteur
      *
-     * @return integer
+     * @return string
      */
     public function getAuteur()
     {
@@ -92,6 +99,30 @@ class Message
     public function getMessage()
     {
         return $this->message;
+    }
+
+    /**
+     * Set destinataire
+     *
+     * @param string $destinataire
+     *
+     * @return destinataire
+     */
+    public function setDestinataire($destinataire)
+    {
+        $this->destinataire = $destinataire;
+
+        return $this;
+    }
+
+    /**
+     * Get destinataire
+     *
+     * @return string
+     */
+    public function getDestinataire()
+    {
+        return $this->destinataire;
     }
 }
 
