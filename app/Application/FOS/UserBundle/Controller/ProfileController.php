@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace CryptYO\HomeBundle\Controller;
+namespace FOS\UserBundle\Controller;
 
-use CryptYO\HomeBundle\Controller\ProfileController as BaseController;
+use FOS\UserBundle\Controller\ProfileController as BaseController;
 use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Event\FormEvent;
 use FOS\UserBundle\Event\FilterUserResponseEvent;
@@ -22,14 +22,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-/**
- * Controller managing the user profile
- *
- * @author Christophe Coevoet <stof@notk.org>
- */
-class ProfileController extends BaseController
+class FOSProfileController extends BaseController
 {
-    /**
+    /*
      * Show the user
      */
     public function showAction()
