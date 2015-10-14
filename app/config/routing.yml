@@ -8,3 +8,7 @@ app:
 
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+app_profile_controller:
+    path:     /app_profile
+    defaults: { _controller: CryptYOHomeBundle:Home:index }

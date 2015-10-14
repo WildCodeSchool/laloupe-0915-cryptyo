@@ -9,6 +9,5 @@ class MessageController extends Controller
     public function sendAction()
     {
         return $this->render('CryptYOHomeBundle:Home:send_message.html.twig');
-
     }
 }
