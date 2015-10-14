@@ -21,14 +21,17 @@
     </div>
 
     <div class="row">
-
         <div class="col-md-offset-5 col-md-7 profile__zoneTexte">
 
             <h4> Ecris ton message :</h4>
-            <div class="clo-xs-4">
-                <textarea class="form-control" rows="3" placeholder="Crypt ton octet ici ..." maxlength="255"></textarea>
-                <input class="btn btn-primary btn-send center" value="Envoyer" />
-            </div>
+                <form name="form" action="{{ path('crypt_yo_home_send_message') }}" method="post">
+                    <textarea class="form-control" rows="3" placeholder="Crypt ton octet ici ..." maxlength="255"></textarea>
+                    <div class="input-group form__destinataire">
+                        <span class="input-group-addon" id="basic-addon1">@</span>
+                        <input name="destinataire" type="text" class="form-control" placeholder="Destinataire(s)" aria-describedby="basic-addon1">
+                    </div>
+                    <input class="btn btn-primary btn-send center" value="Envoyer" type="submit"/>
+                </form>
         </div>
 
     </div>
