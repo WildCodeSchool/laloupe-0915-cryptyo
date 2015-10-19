@@ -1,23 +1,23 @@
 <?php
-// src/AppBundle/Form/Type/TaskType.php
-namespace CryptYOHomeBundle\Form\Type;
+namespace CryptYO\HomeBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class TaskType extends AbstractType
+class MessageType extends AbstractType
 {
-public function buildForm(FormBuilderInterface $builder, array $options)
-{
-$builder
-->add('task')
-->add('dueDate', null, array('widget' => 'single_text'))
-->add('save', 'submit')
-;
-}
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('auteur', 'text')
+            ->add('destinataire', 'text')
+            ->add('message', 'textarea')
+            ->add('save', 'submit')
+        ;
+    }
 
-public function getName()
-{
-return 'task';
-}
+    public function getName()
+    {
+        return 'message';
+    }
 }
