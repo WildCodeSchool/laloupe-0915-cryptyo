@@ -109,3 +109,8 @@ body {
 .form__destinataire {
     margin-top: 10px;
 }
+
+.flash-notice {
+    text-align: center;
+    font-size: 1.2em;
+}

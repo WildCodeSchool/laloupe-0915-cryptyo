@@ -35,7 +35,7 @@ class ProfileController extends BaseController
     {
         $form = $this->createForm(new MessageType(), new Message(), array(
             'action' => $this->generateUrl('crypt_yo_home_send_message'),
-            'method' => 'POST'
+            'method' => 'POST',
         ));
 
         $user = $this->getUser();
@@ -45,24 +45,47 @@ class ProfileController extends BaseController
 
         return $this->render('FOSUserBundle:Profile:show.html.twig', array(
             'user' => $user,
-            'form' => $form->createView(),
+            'form' => $form->createView()
         ));
     }
 
     public function createMessageAction(Request $request)
     {
+        $seed = str_split('abcdefghijklmnopqrstuvwxyz'
+            .'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+            .'0123456789!@#$%^&*()'); // and any other characters
+        shuffle($seed); // probably optional since array_is randomized; this may be redundant
+        $rand = '';
+        foreach (array_rand($seed, 10) as $k) $rand .= $seed[$k];
+
+
         $message = new Message();
         $form = $this->createForm(new MessageType(), $message);
         $form->handleRequest($request);
+
         if ($form->isValid()) {
+            $previousMessage = $message->getMessage();
+            $message->setMessage(md5($rand.$previousMessage));
+
+            $this->addFlash(
+                'notice',
+                'Message bien envoyé !'
+            );
             $em = $this->getDoctrine()->getManager();
             $em->persist($message);
             $em->flush();
 
+
+            $sendMessage = \Swift_Message::newInstance()
+                ->setSubject('Erwan vous a envoyé un message !!!')
+                ->setFrom('CryptYO@gmail.com')
+                ->setTo('carpediemeuh@hotmail.com')
+                ->setBody('Voici votre sel : '.$rand)
+            ;
+            $this->get('mailer')->send($sendMessage);
+
+
+            return $this->redirect($this->generateUrl('fos_user_profile_show'));
         }
-        return $this->redirect($this->generateUrl('fos_user_profile_show'));
     }
-
-
-
 }
