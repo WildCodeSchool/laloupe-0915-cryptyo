@@ -24,6 +24,11 @@
         <div class="col-md-offset-5 col-md-7 profile__zoneTexte">
 
             <h4> Ecris ton message :</h4>
+            {% for flashMessage in app.session.flashbag.get('notice') %}
+                <div class="flash-notice alert alert-success" role="alert">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
             {{ form_start(form) }}
             <div class="hidden">
                 {{ form_widget(form.auteur, {'value' : user.username})  }}
