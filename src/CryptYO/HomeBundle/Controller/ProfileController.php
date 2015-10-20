@@ -38,34 +38,71 @@ class ProfileController extends BaseController
             'method' => 'POST',
         ));
 
+        $data = array();
+        $decryptForm = $this->createFormBuilder($data)
+            ->setAction($this->generateUrl('crypt_yo_home_decrypt_message'))
+            ->setMethod('POST')
+            ->add('id', 'integer')
+            ->add('sel', 'text')
+            ->add('save', 'submit')
+            ->getForm();
+
+
+
         $user = $this->getUser();
         if (!is_object($user) || !$user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');
         }
 
+        $em = $this->getDoctrine()->getManager();
+        $messages = $em->getRepository('CryptYOHomeBundle:Message')->findBy(array('destinataire' => 'erwan'));
+
         return $this->render('FOSUserBundle:Profile:show.html.twig', array(
             'user' => $user,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'decryptForm' => $decryptForm->createView(),
+            'messages' => $messages
         ));
+    }
+
+    public function decryptAction(Request $request)
+    {
+
+        return $this->render('FOSUserBundle:Profile:decrypted.html.twig');
     }
 
     public function createMessageAction(Request $request)
     {
         $seed = str_split('abcdefghijklmnopqrstuvwxyz'
             .'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-            .'0123456789!@#$%^&*()'); // and any other characters
-        shuffle($seed); // probably optional since array_is randomized; this may be redundant
+            .'0123456789!@#$%^&*()');
+        shuffle($seed);
         $rand = '';
         foreach (array_rand($seed, 10) as $k) $rand .= $seed[$k];
 
+        $iv = mcrypt_create_iv(
+            mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC),
+            MCRYPT_DEV_URANDOM
+        );
 
         $message = new Message();
         $form = $this->createForm(new MessageType(), $message);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+
             $previousMessage = $message->getMessage();
-            $message->setMessage(md5($rand.$previousMessage));
+            $encrypted = base64_encode(
+                $iv .
+                mcrypt_encrypt(
+                    MCRYPT_RIJNDAEL_128,
+                    hash('sha256', $rand, true),
+                    $previousMessage,
+                    MCRYPT_MODE_CBC,
+                    $iv
+                )
+            );
+            $message->setMessage($encrypted);
 
             $this->addFlash(
                 'notice',
@@ -75,11 +112,17 @@ class ProfileController extends BaseController
             $em->persist($message);
             $em->flush();
 
+            $destinataire = $message->getDestinataire();
+            $auteur = $message->getAuteur();
+            $userManager = $this->get('fos_user.user_manager');
+            $mailDestinataire = $userManager->findUserByUsername($destinataire)->getEmail();
+            $mailAuteur = $userManager->findUserByUsername($auteur)->getEmail();
+            $to = array($mailAuteur, $mailDestinataire);
 
             $sendMessage = \Swift_Message::newInstance()
-                ->setSubject('Erwan vous a envoyé un message !!!')
+                ->setSubject($message->getAuteur().' vous a envoyé un message !!!')
                 ->setFrom('CryptYO@gmail.com')
-                ->setTo('carpediemeuh@hotmail.com')
+                ->setTo($to)
                 ->setBody('Voici votre sel : '.$rand)
             ;
             $this->get('mailer')->send($sendMessage);
