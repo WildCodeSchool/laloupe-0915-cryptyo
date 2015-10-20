@@ -5,3 +5,7 @@ crypt_yo_home_homepage:
 crypt_yo_home_send_message:
     path:     /send_message
     defaults: { _controller: CryptYOHomeBundle:Profile:createMessage }
+
+crypt_yo_home_decrypt_message:
+    path:     /decrypt
+    defaults: { _controller: CryptYOHomeBundle:Profile:decrypt }

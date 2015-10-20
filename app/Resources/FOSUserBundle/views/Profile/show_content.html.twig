@@ -16,6 +16,30 @@
         <div class="col-md-7 profile__notification">
 
             <h4> Mes messages :</h4>
+            {{ form(decryptForm) }}
+
+            <table>
+                <tr>
+                    <th>ID :</th>
+                    <th>Auteur :</th>
+                    <th>Message :</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+            {% for message in messages|slice(20, 30) %}
+
+                <tr>
+                    <td>{{ message.id }}</td>
+                    <td>{{ message.auteur }}</td>
+                    <td>{{ message.message }}</td>
+                </tr>
+
+            {% endfor %}
+
+                </tbody>
+            </table>
 
         </div>
     </div>
