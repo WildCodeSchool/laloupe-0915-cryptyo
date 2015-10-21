@@ -81,6 +81,7 @@
             <div class="input-group form__destinataire">
                 <span class="input-group-addon" id="basic-addon1">@</span>
                 {{ form_widget(form.destinataire, {'attr': {'class' : 'form-control', 'aria-describedby':'basic-addon1', 'placeholder':'Destinataire'}}) }}
+                                                    <!--Attribution de class en twig-->
             </div>
 
             {{ form_widget(form.save, { 'label': 'Envoyer', 'attr': {'class' : 'btn btn-primary btn-send center'}}) }}
@@ -88,4 +89,5 @@
             {{ form_end(form) }}
         </div>
 
+    </div>
     </div>
