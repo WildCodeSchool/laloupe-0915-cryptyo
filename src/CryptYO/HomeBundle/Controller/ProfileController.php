@@ -45,9 +45,10 @@ class ProfileController extends BaseController
         if (!is_object($user) || !$user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');
         }
+        $userName = $user->getUsername();
 
         $em = $this->getDoctrine()->getManager();
-        $messages = $em->getRepository('CryptYOHomeBundle:Message')->findBy(array('destinataire' => 'erwan'));
+        $messages = $em->getRepository('CryptYOHomeBundle:Message')->findBy(array('destinataire' => $userName));
 
         return $this->render('FOSUserBundle:Profile:show.html.twig', array(
             'user' => $user,
