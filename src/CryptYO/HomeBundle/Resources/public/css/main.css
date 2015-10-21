@@ -114,3 +114,26 @@ body {
     text-align: center;
     font-size: 1.2em;
 }
+
+td {
+    font-size: 1em;
+    border: solid 2px #81B3CC;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+th {
+    border: solid 2px #81B3CC;
+    font-size: 1em;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.message__recu {
+    text-align: center;
+    font-size: 2em;
+}
+
+.btn__retour {
+    float: right;
+    margin-top: 20px;
+}
