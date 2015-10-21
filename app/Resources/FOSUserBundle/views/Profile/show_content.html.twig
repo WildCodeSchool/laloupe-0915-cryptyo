@@ -8,40 +8,58 @@
             <h4> Mon espace abonné :</h4>
             <p>Login: {{ user.username }}</p>
             <p>Email: {{ user.email }}</p>
-            <p> <a href=" {{ path('fos_user_security_logout') }}">Se deconnecter</a></p>
+            <p> <a href="{{ path('fos_user_security_logout') }}">Se deconnecter</a></p>
         </div>
 
         <div class="col-md-1"></div>
 
         <div class="col-md-7 profile__notification">
 
-            <h4> Mes messages :</h4>
-            {{ form(decryptForm) }}
+            <div class="row row__sendMessage">
+                <div class="col-md-5">
+                    <h4>Décryptez votre message :</h4>
+                </div>
+                {{ form_start(decryptForm) }}
+                <div class="col-md-7 decrypt__zone">
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1">ID :</span>
+                        {{ form_widget(decryptForm.id, {'attr': {'class' : 'form-control input__id', 'aria-describedby':'basic-addon1'}}) }}
+                        <span class="input-group-addon" id="basic-addon2">Sel :</span>
+                        {{ form_widget(decryptForm.sel, {'attr': {'class' : 'form-control input__sel', 'aria-describedby':'basic-addon2'}}) }}
+                        {{ form_widget(decryptForm.save, {'label': 'Décrypter', 'attr': {'class' : 'input__save'}}) }}
+                    </div>
+                </div>
+                {{ form_end(decryptForm) }}
+            </div>
 
-            <table>
-                <tr>
-                    <th>ID :</th>
-                    <th>Auteur :</th>
-                    <th>Message :</th>
-                </tr>
-                </thead>
+            <div class="row row__seeMessage">
+                <div class="col-md-12">
+                    <h4> Mes messages :</h4>
+                    <table>
+                        <tr>
+                            <th>ID :</th>
+                            <th>Auteur :</th>
+                            <th>Message :</th>
+                        </tr>
+                        </thead>
 
-                <tbody>
+                        <tbody>
 
-            {% for message in messages %}
-                {% if loop.index > 40 %}
+                        {% for message in messages|reverse %}
+                            {% if loop.index < 10 %}
+                                <tr>
+                                    <td>{{ message.id }}</td>
+                                    <td>{{ message.auteur }}</td>
+                                    <td>{{ message.message[:65] }}</td>
+                                </tr>
+                            {% else %}
+                            {% endif %}
+                        {% endfor %}
 
-                <tr>
-                    <td>{{ message.id }}</td>
-                    <td>{{ message.auteur }}</td>
-                    <td>{{ message.message[:30] }}</td>
-                </tr>
-                {% else %}
-                {% endif %}
-            {% endfor %}
-
-                </tbody>
-            </table>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
         </div>
     </div>
