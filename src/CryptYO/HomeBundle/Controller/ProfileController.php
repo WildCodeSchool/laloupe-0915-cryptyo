@@ -12,14 +12,8 @@
 namespace CryptYO\HomeBundle\Controller;
 
 use FOS\UserBundle\Controller\ProfileController as BaseController;
-use FOS\UserBundle\FOSUserEvents;
-use FOS\UserBundle\Event\FormEvent;
-use FOS\UserBundle\Event\FilterUserResponseEvent;
-use FOS\UserBundle\Event\GetResponseUserEvent;
 use FOS\UserBundle\Model\UserInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use CryptYO\HomeBundle\Entity\Message;
 use CryptYO\HomeBundle\Form\Type\MessageType;
@@ -47,8 +41,6 @@ class ProfileController extends BaseController
             ->add('save', 'submit')
             ->getForm();
 
-
-
         $user = $this->getUser();
         if (!is_object($user) || !$user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');
@@ -67,8 +59,32 @@ class ProfileController extends BaseController
 
     public function decryptAction(Request $request)
     {
+        $result = $request->request->get('form');
+        $resultId = $result['id'];
+        $resultSel = $result['sel'];
 
-        return $this->render('FOSUserBundle:Profile:decrypted.html.twig');
+        $em = $this->getDoctrine()->getManager();
+        $message = $em->getRepository('CryptYOHomeBundle:Message')->findOneBy(array('id' => $resultId));
+        $crytedMessage = $message->getMessage();
+        $auteurMessage = $message->getAuteur();
+
+        $data = base64_decode($crytedMessage);
+        $iv = substr($data, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC));
+
+        $decrypted = rtrim(
+            mcrypt_decrypt(
+                MCRYPT_RIJNDAEL_128,
+                hash('sha256', $resultSel, true),
+                substr($data, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC)),
+                MCRYPT_MODE_CBC,
+                $iv
+            ),
+            "\0"
+        );
+
+        return $this->render('FOSUserBundle:Profile:decrypted.html.twig', array(
+            'decrypted' => $decrypted
+        ));
     }
 
     public function createMessageAction(Request $request)
@@ -90,7 +106,6 @@ class ProfileController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-
             $previousMessage = $message->getMessage();
             $encrypted = base64_encode(
                 $iv .
@@ -108,6 +123,7 @@ class ProfileController extends BaseController
                 'notice',
                 'Message bien envoyé !'
             );
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($message);
             $em->flush();
@@ -120,7 +136,7 @@ class ProfileController extends BaseController
             $to = array($mailAuteur, $mailDestinataire);
 
             $sendMessage = \Swift_Message::newInstance()
-                ->setSubject($message->getAuteur().' vous a envoyé un message !!!')
+                ->setSubject($auteur.' vous a envoyé un message !!!')
                 ->setFrom('CryptYO@gmail.com')
                 ->setTo($to)
                 ->setBody('Voici votre sel : '.$rand)

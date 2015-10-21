@@ -28,14 +28,16 @@
 
                 <tbody>
 
-            {% for message in messages|slice(20, 30) %}
+            {% for message in messages %}
+                {% if loop.index > 40 %}
 
                 <tr>
                     <td>{{ message.id }}</td>
                     <td>{{ message.auteur }}</td>
-                    <td>{{ message.message }}</td>
+                    <td>{{ message.message[:30] }}</td>
                 </tr>
-
+                {% else %}
+                {% endif %}
             {% endfor %}
 
                 </tbody>
