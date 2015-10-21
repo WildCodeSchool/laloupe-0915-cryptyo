@@ -128,6 +128,7 @@ th {
     font-size: 1em;
     padding-left: 15px;
     padding-right: 15px;
+<<<<<<< HEAD
     text-align: center;
 }
 table {
@@ -168,4 +169,16 @@ table {
 }
 .row__sendMessage h4{
     margin-bottom: 10px;
+=======
+}
+
+.message__recu {
+    text-align: center;
+    font-size: 2em;
+}
+
+.btn__retour {
+    float: right;
+    margin-top: 20px;
+>>>>>>> 81bff31297001a1e9fffa17222c2d87053aa3f95
 }
