@@ -121,17 +121,22 @@ td {
     border: solid 2px #81B3CC;
     padding-left: 10px;
     padding-right: 10px;
+    text-align: center;
 }
 th {
     border: solid 2px #81B3CC;
     font-size: 1em;
     padding-left: 15px;
     padding-right: 15px;
+    text-align: center;
 }
 table {
     margin-top: 20px;
 }
-
+.td__message{
+    color: #0C83BF;
+    cursor: pointer;
+}
 .input__id {
     width: 70px!important;
 }

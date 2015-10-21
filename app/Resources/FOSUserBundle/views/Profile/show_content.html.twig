@@ -5,9 +5,9 @@
     <div class="row">
 
         <div class="col-md-4 fos_user_user_show profile__info">
-            <h4> Mon espace abonné :</h4>
-            <p>Login: {{ user.username }}</p>
-            <p>Email: {{ user.email }}</p>
+            <h4> Espace abonné :</h4>
+            <p><b>Login:</b> {{ user.username }}</p>
+            <p><b>Email:</b> {{ user.email }}</p>
             <p> <a href="{{ path('fos_user_security_logout') }}">Se deconnecter</a></p>
         </div>
 
@@ -17,13 +17,13 @@
 
             <div class="row row__sendMessage">
                 <div class="col-md-5">
-                    <h4>Décryptez votre message :</h4>
+                    <h4>Décrypter un message :</h4>
                 </div>
                 {{ form_start(decryptForm) }}
                 <div class="col-md-7 decrypt__zone">
                     <div class="input-group">
                         <span class="input-group-addon" id="basic-addon1">ID :</span>
-                        {{ form_widget(decryptForm.id, {'attr': {'class' : 'form-control input__id', 'aria-describedby':'basic-addon1'}}) }}
+                        {{ form_widget(decryptForm.id, {'attr': {'value' : '1', 'class' : 'form-control input__id', 'aria-describedby':'basic-addon1'}}) }}
                         <span class="input-group-addon" id="basic-addon2">Sel :</span>
                         {{ form_widget(decryptForm.sel, {'attr': {'class' : 'form-control input__sel', 'aria-describedby':'basic-addon2'}}) }}
                         {{ form_widget(decryptForm.save, {'label': 'Décrypter', 'attr': {'class' : 'input__save'}}) }}
@@ -39,7 +39,7 @@
                         <tr>
                             <th>ID :</th>
                             <th>Auteur :</th>
-                            <th>Message :</th>
+                            <th>Messages :</th>
                         </tr>
                         </thead>
 
@@ -49,8 +49,8 @@
                             {% if loop.index < 10 %}
                                 <tr>
                                     <td>{{ message.id }}</td>
-                                    <td>{{ message.auteur }}</td>
-                                    <td>{{ message.message[:65] }}</td>
+                                    <td>{{ message.auteur|capitalize }}</td>
+                                    <td class="td__message" onclick="putIdValue({{ message.id }})">{{ message.message[:73] }}</td>
                                 </tr>
                             {% else %}
                             {% endif %}
@@ -67,7 +67,7 @@
     <div class="row">
         <div class="col-md-offset-5 col-md-7 profile__zoneTexte">
 
-            <h4> Ecris ton message :</h4>
+            <h4> Nouveau message :</h4>
             {% for flashMessage in app.session.flashbag.get('notice') %}
                 <div class="flash-notice alert alert-success" role="alert">
                     {{ flashMessage }}
