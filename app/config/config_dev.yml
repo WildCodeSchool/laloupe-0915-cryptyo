@@ -47,4 +47,5 @@ assetic:
 swiftmailer:
     transport: gmail
     username: erwan.haquet@gmail.com
-    password: ~
+    password: m08111987M
+

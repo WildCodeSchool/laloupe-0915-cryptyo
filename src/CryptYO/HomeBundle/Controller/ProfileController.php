@@ -18,6 +18,8 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use CryptYO\HomeBundle\Entity\Message;
 use CryptYO\HomeBundle\Form\Type\MessageType;
 
+
+
 /**
  * Controller managing the user profile
  *
