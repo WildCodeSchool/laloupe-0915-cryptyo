@@ -29,7 +29,7 @@
         {% elseif app.user %}
             <div class="col-md-4"></div>
             <div class="col-md-2 header__logout">
-                <a href=" {{ path('fos_user_security_logout') }}">Se deconnecter</a>
+                <a href=" {{ path('fos_user_security_logout') }}">Se déconnecter</a>
             </div>
         {% else %}
         <div class="col-md-3 text-center">
@@ -46,7 +46,7 @@
                 <input type="password" name="_password" required="required" style="margin-right: -3px"/>
 
                 <br/>
-                <button type="submit">Se connecter</button>
+                <button class="btn btn-primary btn__retour" type="submit">Se connecter</button>
             </form>
         </div>
 
