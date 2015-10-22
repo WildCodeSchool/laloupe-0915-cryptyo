@@ -5,5 +5,5 @@ function putIdValue($id){
     var textId = document.getElementById('form_id');
     var textSel = document.getElementById('form_sel')
     textId.value = $id;
-    textSel.value = 'Entrez votre sel';
+    textSel.placeholder = 'Entre ton sel';
 }
