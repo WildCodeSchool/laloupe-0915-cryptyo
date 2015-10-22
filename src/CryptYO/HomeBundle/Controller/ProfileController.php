@@ -45,43 +45,31 @@ class ProfileController extends BaseController
         if (!is_object($user) || !$user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');
         }
-        $userName = $user->getUsername();
 
+        // On récupère tous les message de l'utilisateur connécté
+        $userName = $user->getUsername();
         $em = $this->getDoctrine()->getManager();
-        $messages = $em->getRepository('CryptYOHomeBundle:Message')->findBy(array('destinataire' => $userName));
+        $userMessages = $em->getRepository('CryptYOHomeBundle:Message')->findBy(array('destinataire' => $userName));
 
         return $this->render('FOSUserBundle:Profile:show.html.twig', array(
             'user' => $user,
             'form' => $form->createView(),
             'decryptForm' => $decryptForm->createView(),
-            'messages' => $messages
+            'messages' => $userMessages
         ));
     }
 
     public function decryptAction(Request $request)
     {
-        $result = $request->request->get('form');
-        $resultId = $result['id'];
-        $resultSel = $result['sel'];
+        $resultForm = $request->request->get('form');
+        $resultId = $resultForm['id'];
+        $resultSel = $resultForm['sel'];
 
         $em = $this->getDoctrine()->getManager();
         $message = $em->getRepository('CryptYOHomeBundle:Message')->findOneBy(array('id' => $resultId));
-        $crytedMessage = $message->getMessage();
-        $auteurMessage = $message->getAuteur();
+        $cryptedMessage = $message->getMessage();
 
-        $data = base64_decode($crytedMessage);
-        $iv = substr($data, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC));
-
-        $decrypted = rtrim(
-            mcrypt_decrypt(
-                MCRYPT_RIJNDAEL_128,
-                hash('sha256', $resultSel, true),
-                substr($data, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC)),
-                MCRYPT_MODE_CBC,
-                $iv
-            ),
-            "\0"
-        );
+        $decrypted = $this->decryptMessage($cryptedMessage, $resultSel);
 
         return $this->render('FOSUserBundle:Profile:decrypted.html.twig', array(
             'decrypted' => $decrypted
@@ -89,6 +77,72 @@ class ProfileController extends BaseController
     }
 
     public function createMessageAction(Request $request)
+    {
+        $message = new Message();
+        $form = $this->createForm(new MessageType(), $message);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            // Crypt du message
+            $previousMessage = $message->getMessage();
+            $encrypted = $this->cryptMessage($previousMessage);
+            $encryptedMessage = $encrypted[0];
+            $sel = $encrypted[1]; // on recupere le sel
+            $message->setMessage($encryptedMessage);
+            //
+
+            $this->addFlash(
+                'notice',
+                'Message bien envoyé !'
+            );
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($message);
+            $em->flush();
+
+            // On récupere les adresses mail pour le mailing
+            $destinataire = $message->getDestinataire();
+            $auteur = $message->getAuteur();
+            $userManager = $this->get('fos_user.user_manager');
+            $mailDestinataire = $userManager->findUserByUsername($destinataire)->getEmail();
+            $mailAuteur = $userManager->findUserByUsername($auteur)->getEmail();
+            $to = array($mailAuteur, $mailDestinataire);
+
+            $sendMessage = \Swift_Message::newInstance()
+                ->setSubject($auteur.' vous a envoyé un message !!!')
+                ->setFrom('CryptYO@gmail.com')
+                ->setTo($to)
+                ->setBody('Voici votre sel : '.$sel)
+            ;
+            $this->get('mailer')->send($sendMessage);
+
+            return $this->redirect($this->generateUrl('fos_user_profile_show'));
+        }
+    }
+
+
+
+    private function decryptMessage($cryptedMessage, $sel)
+    {
+        $data = base64_decode($cryptedMessage);
+        $iv = substr($data, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC));
+
+        $decrypted = rtrim(
+            mcrypt_decrypt(
+                MCRYPT_RIJNDAEL_128,
+                hash('sha256', $sel, true),
+                substr($data, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC)),
+                MCRYPT_MODE_CBC,
+                $iv
+            ),
+            "\0"
+        );
+
+        return $decrypted;
+    }
+
+    private function cryptMessage($message)
     {
         $seed = str_split('abcdefghijklmnopqrstuvwxyz'
             .'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
@@ -102,50 +156,18 @@ class ProfileController extends BaseController
             MCRYPT_DEV_URANDOM
         );
 
-        $message = new Message();
-        $form = $this->createForm(new MessageType(), $message);
-        $form->handleRequest($request);
+        $cryptedMessage = base64_encode(
+            $iv .
+            mcrypt_encrypt(
+                MCRYPT_RIJNDAEL_128,
+                hash('sha256', $rand, true),
+                $message,
+                MCRYPT_MODE_CBC,
+                $iv
+            )
+        );
 
-        if ($form->isValid()) {
-            $previousMessage = $message->getMessage();
-            $encrypted = base64_encode(
-                $iv .
-                mcrypt_encrypt(
-                    MCRYPT_RIJNDAEL_128,
-                    hash('sha256', $rand, true),
-                    $previousMessage,
-                    MCRYPT_MODE_CBC,
-                    $iv
-                )
-            );
-            $message->setMessage($encrypted);
+        return array($cryptedMessage, $rand);
 
-            $this->addFlash(
-                'notice',
-                'Message bien envoyé !'
-            );
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($message);
-            $em->flush();
-
-            $destinataire = $message->getDestinataire();
-            $auteur = $message->getAuteur();
-            $userManager = $this->get('fos_user.user_manager');
-            $mailDestinataire = $userManager->findUserByUsername($destinataire)->getEmail();
-            $mailAuteur = $userManager->findUserByUsername($auteur)->getEmail();
-            $to = array($mailAuteur, $mailDestinataire);
-
-            $sendMessage = \Swift_Message::newInstance()
-                ->setSubject($auteur.' vous a envoyé un message !!!')
-                ->setFrom('CryptYO@gmail.com')
-                ->setTo($to)
-                ->setBody('Voici votre sel : '.$rand)
-            ;
-            $this->get('mailer')->send($sendMessage);
-
-
-            return $this->redirect($this->generateUrl('fos_user_profile_show'));
-        }
     }
 }

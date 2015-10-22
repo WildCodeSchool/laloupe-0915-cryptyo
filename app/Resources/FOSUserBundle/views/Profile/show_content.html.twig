@@ -8,7 +8,10 @@
             <h4> Espace abonné :</h4>
             <p><b>Login:</b> {{ user.username }}</p>
             <p><b>Email:</b> {{ user.email }}</p>
-            <p> <a href="{{ path('fos_user_security_logout') }}">Se deconnecter</a></p>
+            <p>
+                - <a href="{{ path('fos_user_profile_edit') }}">Modifier ton profil</a> </br>
+                - <a href="{{ path('fos_user_security_logout') }}">Se deconnecter</a>
+            </p>
         </div>
 
         <div class="col-md-1"></div>
@@ -22,8 +25,8 @@
                 {{ form_start(decryptForm) }}
                 <div class="col-md-7 decrypt__zone">
                     <div class="input-group">
-                        <span class="input-group-addon" id="basic-addon1">ID :</span>
-                        {{ form_widget(decryptForm.id, {'attr': {'value' : '1', 'class' : 'form-control input__id', 'aria-describedby':'basic-addon1'}}) }}
+                        <span class="input-group-addon" id="basic-addon1">N° :</span>
+                        {{ form_widget(decryptForm.id, {'attr': {'class' : 'form-control input__id', 'aria-describedby':'basic-addon1'}}) }}
                         <span class="input-group-addon" id="basic-addon2">Sel :</span>
                         {{ form_widget(decryptForm.sel, {'attr': {'class' : 'form-control input__sel', 'aria-describedby':'basic-addon2'}}) }}
                         {{ form_widget(decryptForm.save, {'label': 'Décrypter', 'attr': {'class' : 'input__save'}}) }}
@@ -37,7 +40,7 @@
                     <h4> Mes messages :</h4>
                     <table>
                         <tr>
-                            <th>ID :</th>
+                            <th>N° :</th>
                             <th>Auteur :</th>
                             <th>Messages :</th>
                         </tr>
