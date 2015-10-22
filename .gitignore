@@ -10,4 +10,4 @@
 /vendor/
 /web/bundles/
 /app/config/config_dev.yml
-
+/.idea/workspace.xml

@@ -28,6 +28,10 @@
     padding-top: 10px;
     padding-bottom: 10px;
 }
+.home__form label {
+    color: white;
+}
+
 .header__logo {
     width: 80px;
     margin-top: 2px;
@@ -65,7 +69,7 @@
     font-family: 'logo__font', 'Roboto', sans-serif;
 }
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Source Sans Pro', sans-serif;
 }
 .banniere input {
     background-color: white!important;
@@ -87,17 +91,21 @@ body {
     min-height: 100px;
     padding: 10px;
 }
+.profile__info a {
+    line-height: 20px;
+}
 
 .profile__info h4, .profile__notification h4, .profile__zoneTexte h4{
     text-align: center;
-    text-decoration: underline;
+    font-size: 1.5em;
     margin-bottom: 20px;
+    padding: 6px 12px;
+    background-color: #C8E6F5;
 }
 .profile__info p {
     line-height: 12px;
 }
 .profile__notification {
-    background-color: #E4F5FD;
     min-height: 200px;
     padding: 10px;
 }
@@ -120,14 +128,54 @@ td {
     border: solid 2px #81B3CC;
     padding-left: 10px;
     padding-right: 10px;
+    text-align: center;
 }
 th {
     border: solid 2px #81B3CC;
     font-size: 1em;
     padding-left: 15px;
     padding-right: 15px;
+    text-align: center;
 }
-
+table {
+    margin-top: 20px;
+}
+.td__message{
+    color: #0C83BF;
+    cursor: pointer;
+}
+.input__id {
+    width: 70px!important;
+}
+.input__sel {
+    width: 120px!important;
+}
+.input-group-addon{
+    width:0;
+}
+.input-group{
+    margin: auto;
+}
+.input__save {
+    float: left;
+    height: 34px;
+}
+.decrypt__zone {
+    margin-top: 10px;
+}
+.row__sendMessage {
+    background-color: #E4F5FD;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.row__seeMessage {
+    margin-top: 20px;
+    padding-bottom: 10px;
+    background-color: #E4F5FD;
+}
+.row__sendMessage h4{
+    margin-bottom: 10px;
+}
 .message__recu {
     text-align: center;
     font-size: 2em;
@@ -135,5 +183,19 @@ th {
 
 .btn__retour {
     float: right;
-    margin-top: 20px;
+    margin-top: 10px;
+}
+
+.btn__retour2 {
+    float: left;
+    margin-top: 10px;
+}
+
+.btn__record {
+    margin-top: 10px;
+}
+
+.fields__register {
+    display: block;
+    margin: 0 auto;
 }
