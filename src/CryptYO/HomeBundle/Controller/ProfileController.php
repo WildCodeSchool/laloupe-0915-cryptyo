@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use CryptYO\HomeBundle\Entity\Message;
 use CryptYO\HomeBundle\Form\Type\MessageType;
+use CryptYO\HomeBundle\Entity\Friend;
 
 /**
  * Controller managing the user profile
@@ -45,6 +46,8 @@ class ProfileController extends BaseController
         if (!is_object($user) || !$user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');
         }
+
+
 
         // On récupère tous les message de l'utilisateur connécté
         $userName = $user->getUsername();
