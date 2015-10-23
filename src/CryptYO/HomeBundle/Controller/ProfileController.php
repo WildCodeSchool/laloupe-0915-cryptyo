@@ -104,6 +104,8 @@ class ProfileController extends BaseController
             // On récupere les adresses mail pour le mailing
             $destinataire = $message->getDestinataire();
             $auteur = $message->getAuteur();
+            $id = $message->getId();
+            $currentMessage = $message->getMessage();
             $userManager = $this->get('fos_user.user_manager');
             $mailDestinataire = $userManager->findUserByUsername($destinataire)->getEmail();
             $mailAuteur = $userManager->findUserByUsername($auteur)->getEmail();
@@ -113,8 +115,18 @@ class ProfileController extends BaseController
                 ->setSubject($auteur.' vous a envoyé un message !!!')
                 ->setFrom('CryptYO@gmail.com')
                 ->setTo($to)
-                ->setBody('Voici votre sel : '.$sel)
-            ;
+                ->setBody(
+                    $this->renderView(
+                        'Emails/receivedMessage.html.twig',
+                        array(
+                            'sel' => $sel,
+                            'auteur' => $auteur,
+                            'message' => $currentMessage,
+                            'id' => $id
+                        )
+                    ),
+                    'text/html'
+                );
             $this->get('mailer')->send($sendMessage);
 
             return $this->redirect($this->generateUrl('fos_user_profile_show'));
