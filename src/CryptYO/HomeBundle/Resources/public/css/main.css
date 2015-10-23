@@ -199,3 +199,6 @@ table {
     display: block;
     margin: 0 auto;
 }
+.btn__next{
+    float: right;
+}
