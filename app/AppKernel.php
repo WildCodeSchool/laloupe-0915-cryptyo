@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new CryptYO\HomeBundle\CryptYOHomeBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
+            new Acme\TestBundle\AcmeTestBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
