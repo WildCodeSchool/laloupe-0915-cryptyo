@@ -25,3 +25,8 @@ monolog:
             level: debug
         console:
             type:  console
+
+swiftmailer:
+    transport: gmail
+    username: cryptyo@gmail.com
+    password: wcs.project
