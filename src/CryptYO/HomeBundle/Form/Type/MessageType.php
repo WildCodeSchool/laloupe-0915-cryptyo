@@ -9,7 +9,6 @@ class MessageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('auteur', 'text')
             ->add('destinataire', 'entity', array(
                 'class' => 'CryptYOHomeBundle:User', // Utiliser une entitée comme choix multiple.
             ))

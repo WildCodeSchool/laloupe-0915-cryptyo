@@ -36,38 +36,4 @@ class User extends BaseUser
 
 
     // GENERATED CODE
-
-    /**
-     * Add friend
-     *
-     * @param \CryptYO\HomeBundle\Entity\User $friend
-     *
-     * @return User
-     */
-    public function addFriend(\CryptYO\HomeBundle\Entity\User $friend)
-    {
-        $this->friends[] = $friend;
-
-        return $this;
-    }
-
-    /**
-     * Remove friend
-     *
-     * @param \CryptYO\HomeBundle\Entity\User $friend
-     */
-    public function removeFriend(\CryptYO\HomeBundle\Entity\User $friend)
-    {
-        $this->friends->removeElement($friend);
-    }
-
-    /**
-     * Get friends
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getFriends()
-    {
-        return $this->friends;
-    }
 }

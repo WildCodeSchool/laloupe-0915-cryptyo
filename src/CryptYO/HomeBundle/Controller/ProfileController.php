@@ -11,6 +11,8 @@
 
 namespace CryptYO\HomeBundle\Controller;
 
+use CryptYO\HomeBundle\Entity\User;
+use CryptYO\HomeBundle\Form\Type\AddFriendType;
 use FOS\UserBundle\Controller\ProfileController as BaseController;
 use FOS\UserBundle\Model\UserInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,6 +27,7 @@ use CryptYO\HomeBundle\Form\Type\MessageType;
  */
 class ProfileController extends BaseController
 {
+
     public function showAction()
     {
         $form = $this->createForm(new MessageType(), new Message(), array(
@@ -41,22 +44,47 @@ class ProfileController extends BaseController
             ->add('save', 'submit')
             ->getForm();
 
+        // Add friend form
+        $addFriendsForm   = $this->createAddFriendForm($this->getUser());
+
         $user = $this->getUser();
         if (!is_object($user) || !$user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');
         }
 
-        // On récupère tous les message de l'utilisateur connécté
+        // On récupère tous les message de l'utilisateur connecté
         $userName = $user->getUsername();
         $em = $this->getDoctrine()->getManager();
         $userMessages = $em->getRepository('CryptYOHomeBundle:Message')->findBy(array('destinataire' => $userName));
+        $friends = $em->getRepository('CryptYOHomeBundle:Amis')->findBy(array('name' => $user));
 
         return $this->render('FOSUserBundle:Profile:show.html.twig', array(
             'user' => $user,
             'form' => $form->createView(),
             'decryptForm' => $decryptForm->createView(),
-            'messages' => $userMessages
+            'addfriends' => $addFriendsForm->createView(),
+            'messages' => $userMessages,
+            'friends' => $friends
         ));
+    }
+
+    /**
+     * Creates a form to create a Message entity.
+     *
+     * @param User $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createAddFriendForm(User $entity)
+    {
+        $form = $this->createForm(new AddFriendType(), $entity, array(
+            'action' => $this->generateUrl('crypt_yo_home_send_friend'),
+            'method' => 'POST',
+        ));
+
+        $form->add('submit', 'submit', array('label' => 'Add friend'));
+
+        return $form;
     }
 
     public function decryptAction(Request $request)
@@ -181,5 +209,42 @@ class ProfileController extends BaseController
 
         return array($cryptedMessage, $rand);
 
+    }
+
+    public function sendMessageAction(Request $request)
+    {
+
+        $form = $this->createFormBuilder(array())
+            ->setAction($this->generateUrl('crypt_yo_home_send_friend'))
+            ->setMethod('POST')
+            ->add('name', 'text')
+            ->add('friendsName', 'text')
+            ->add('save', 'submit')
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        // data is an array with "phone" and "period" keys
+        $data = $form->getData();
+
+        $em = $this->getDoctrine()->getManager();
+
+        $contract = $em->getRepository('FrontBundle:Contract')->getContractByPhone($data["phone"]);
+        $contract->setOwner("John Doe");
+        $contract->setPhone($data["phone"]);
+
+        // or this could be $contract = new Contract("John Doe", $data["phone"], $data["period"]);
+
+
+        $em->persist($contract);
+
+        $this->addFlash(
+            'notice',
+            'Ami bien ajouté !'
+        );
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($message);
+        $em->flush();
     }
 }

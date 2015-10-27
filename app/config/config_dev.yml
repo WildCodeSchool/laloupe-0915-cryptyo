@@ -46,5 +46,5 @@ assetic:
 
 swiftmailer:
     transport: gmail
-    username: erwan.haquet@gmail.com
-    password: m08111987M
+    username: cryptyo@gmail.com
+    password: wcs.project
