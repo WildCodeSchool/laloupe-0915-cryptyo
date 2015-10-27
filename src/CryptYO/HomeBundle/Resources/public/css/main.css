@@ -1,3 +1,11 @@
+a:link, a:visited, a:hover, a:active {
+    text-decoration: none;
+}
+
+body {
+    padding-bottom: 50px;
+}
+
 .banniere {
     min-height:80px;
     background-color: #81B3CC;
@@ -87,7 +95,7 @@ body {
 }
 
 .profile__info{
-    background-color: #E4F5FD;
+    background-color: #C8E6F5;
     min-height: 100px;
     padding: 10px;
 }
@@ -100,7 +108,7 @@ body {
     font-size: 1.5em;
     margin-bottom: 20px;
     padding: 6px 12px;
-    background-color: #C8E6F5;
+    background-color: #81B3CC;
 }
 .profile__info p {
     line-height: 12px;
@@ -108,9 +116,10 @@ body {
 .profile__notification {
     min-height: 200px;
     padding: 10px;
+    padding-top:0;
 }
 .profile__zoneTexte {
-    background-color: #E4F5FD;
+    background-color: #C8E6F5;
     margin-top: 20px;
     padding: 10px;
 }
@@ -133,12 +142,10 @@ td {
 th {
     border: solid 2px #81B3CC;
     font-size: 1em;
-    padding-left: 15px;
-    padding-right: 15px;
     text-align: center;
 }
 table {
-    margin-top: 20px;
+    margin:auto;
 }
 .td__message{
     color: #0C83BF;
@@ -164,14 +171,13 @@ table {
     margin-top: 10px;
 }
 .row__sendMessage {
-    background-color: #E4F5FD;
+    background-color: #C8E6F5;
     padding-top: 5px;
     padding-bottom: 5px;
 }
 .row__seeMessage {
     margin-top: 20px;
-    padding-bottom: 10px;
-    background-color: #E4F5FD;
+    background-color: #C8E6F5;
 }
 .row__sendMessage h4{
     margin-bottom: 10px;
@@ -201,4 +207,26 @@ table {
 }
 .btn__next{
     float: right;
+}
+
+
+.info__edit{
+    text-align: right;
+    background-color: #88C3E0;
+}
+.info__edit input{
+    margin-left: 10px;
+}
+
+h4 {
+    color: white;
+}
+
+.plus__message {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 1.1em;
+}
+.switch__page{
+    padding:20px;
 }
