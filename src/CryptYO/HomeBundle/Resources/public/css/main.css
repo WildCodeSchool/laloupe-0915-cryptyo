@@ -230,3 +230,15 @@ h4 {
 .switch__page{
     padding:20px;
 }
+#closeCross {
+    float:right;
+}
+#closeCross a{
+    color: white;
+}
+#openCross {
+    float:right;
+}
+#openCross a{
+    color: white;
+}

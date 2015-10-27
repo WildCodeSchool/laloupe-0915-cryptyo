@@ -37,67 +37,71 @@
 
             <div class="row row__seeMessage">
                 <div class="col-md-12">
-                    <h4> Mes messages :</h4>
-                    <table>
-                        <tr>
-                            <th>N° :</th>
-                            <th>Auteur :</th>
-                            <th>Messages :</th>
-                        </tr>
-                        </thead>
-
-                        <tbody>
-                        {% set page = '' %}
-                        {% for message in messages|reverse %}
-                            {% if loop.index < 6 %}
-                                <tr class="page1">
-                                    <td>{{ message.id }}</td>
-                                    <td>{{ message.auteur|capitalize }}</td>
-                                    <td class="td__message" onclick="putIdValue({{ message.id }})">{{ message.message[:70] }}</td>
-                                </tr>
-                            {% elseif loop.index < 11 %}
-                                <tr class="page1 display__none" style="display:none">
-                                    <td>{{ message.id }}</td>
-                                    <td>{{ message.auteur|capitalize }}</td>
-                                    <td class="td__message" onclick="putIdValue({{ message.id }})">{{ message.message[:70] }}</td>
-                                </tr>
-                            {% elseif loop.index < 21 %}
-                                {% set page = '2' %}
-                            {% elseif loop.index < 31 %}
-                                {% set page = '3' %}
-                            {% elseif loop.index < 41 %}
-                                {% set page = '4' %}
-                            {% elseif loop.index < 51 %}
-                                {% set page = '5' %}
-                            {% elseif loop.index < 61 %}
-                                {% set page = '6' %}
-                            {% elseif loop.index < 71 %}
-                                {% set page = '7' %}
-                            {% elseif loop.index < 81 %}
-                                {% set page = '8' %}
-                            {% elseif loop.index < 91 %}
-                                {% set page = '9' %}
-                            {% elseif loop.index < 101 %}
-                                {% set page = '10' %}
-                            {% elseif loop.index < 111 %}
-                                {% set page = '11' %}
-                            {% endif %}
-
-                            <tr class="page{{ page }} display__none" style="display:none">
-                                <td>{{ message.id }}</td>
-                                <td>{{ message.auteur|capitalize }}</td>
-                                <td class="td__message" onclick="putIdValue({{ message.id }})">{{ message.message[:70] }}</td>
+                    <h4> Mes messages :
+                        <span id="openCross" style="display: none"><a href="#" onclick="openMessage()" ><i class="fa fa-plus-square-o"></i></a></span>
+                        <span id="closeCross"><a href="#" onclick="closeMessage()"><i class="fa fa-minus-square-o"></i></a></span>
+                    </h4>
+                    <div id="messageTable">
+                        <table>
+                            <tr>
+                                <th>N° :</th>
+                                <th>Auteur :</th>
+                                <th>Messages :</th>
                             </tr>
+                            </thead>
 
-                        {% endfor %}
+                            <tbody>
+                            {% set page = '' %}
+                            {% for message in messages|reverse %}
+                                {% if loop.index < 6 %}
+                                    <tr class="page1">
+                                        <td>{{ message.id }}</td>
+                                        <td>{{ message.auteur|capitalize }}</td>
+                                        <td class="td__message" onclick="putIdValue({{ message.id }})">{{ message.message[:70] }}</td>
+                                    </tr>
+                                {% elseif loop.index < 11 %}
+                                    <tr class="page1 display__none" style="display:none">
+                                        <td>{{ message.id }}</td>
+                                        <td>{{ message.auteur|capitalize }}</td>
+                                        <td class="td__message" onclick="putIdValue({{ message.id }})">{{ message.message[:70] }}</td>
+                                    </tr>
+                                {% elseif loop.index < 21 %}
+                                    {% set page = '2' %}
+                                {% elseif loop.index < 31 %}
+                                    {% set page = '3' %}
+                                {% elseif loop.index < 41 %}
+                                    {% set page = '4' %}
+                                {% elseif loop.index < 51 %}
+                                    {% set page = '5' %}
+                                {% elseif loop.index < 61 %}
+                                    {% set page = '6' %}
+                                {% elseif loop.index < 71 %}
+                                    {% set page = '7' %}
+                                {% elseif loop.index < 81 %}
+                                    {% set page = '8' %}
+                                {% elseif loop.index < 91 %}
+                                    {% set page = '9' %}
+                                {% elseif loop.index < 101 %}
+                                    {% set page = '10' %}
+                                {% elseif loop.index < 111 %}
+                                    {% set page = '11' %}
+                                {% endif %}
 
-                        </tbody>
-                    </table>
-                    <div class="plus__message">
-                        <p id="voirPlus" class="voirPlus"><a href="#" onclick="plus()">Voir plus ...</a></p>
+                                <tr class="page{{ page }} display__none" style="display:none">
+                                    <td>{{ message.id }}</td>
+                                    <td>{{ message.auteur|capitalize }}</td>
+                                    <td class="td__message" onclick="putIdValue({{ message.id }})">{{ message.message[:70] }}</td>
+                                </tr>
+                                <div id="maxPage" data-value="{{ loop.length }}" style="display:none"></div>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        <div class="plus__message">
+                            <p id="voirPlus" class="voirPlus"><a href="#" onclick="plus()">Voir plus <i class="fa fa-arrow-down"></i></a></p>
 
-                        <p id="moinsPage" class="switch__page" style="display: none"><a href="#" onclick="moinsPage()">< Page précedente </a></p>
-                        <p id="plusPage" class="switch__page" style="display: none"><a href="#" onclick="plusPage()"> Page suivante ></a></p>
+                            <p id="moinsPage" class="switch__page" style="display: none"><a href="#" onclick="moinsPage()"><i class="fa fa-arrow-left"></i> Page précedente </a></p>
+                            <p id="plusPage" class="switch__page" style="display: none"><a href="#" onclick="plusPage()"> Page suivante <i class="fa fa-arrow-right"></i></a></p>
+                        </div>
                     </div>
                 </div>
             </div>
