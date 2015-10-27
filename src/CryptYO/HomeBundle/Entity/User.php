@@ -20,54 +20,9 @@ class User extends BaseUser
      */
     protected $id;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="CryptYO\HomeBundle\Entity\User", mappedBy="friends")
-     */
-
-    private $friends;
-
     public function __construct()
     {
         parent::__construct();
         // your own logic
-    }
-
-
-
-
-    // GENERATED CODE
-
-    /**
-     * Add friend
-     *
-     * @param \CryptYO\HomeBundle\Entity\User $friend
-     *
-     * @return User
-     */
-    public function addFriend(\CryptYO\HomeBundle\Entity\User $friend)
-    {
-        $this->friends[] = $friend;
-
-        return $this;
-    }
-
-    /**
-     * Remove friend
-     *
-     * @param \CryptYO\HomeBundle\Entity\User $friend
-     */
-    public function removeFriend(\CryptYO\HomeBundle\Entity\User $friend)
-    {
-        $this->friends->removeElement($friend);
-    }
-
-    /**
-     * Get friends
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getFriends()
-    {
-        return $this->friends;
     }
 }

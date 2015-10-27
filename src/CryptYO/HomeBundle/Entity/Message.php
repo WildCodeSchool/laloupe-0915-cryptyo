@@ -125,3 +125,4 @@ class Message
         return $this->destinataire;
     }
 }
+

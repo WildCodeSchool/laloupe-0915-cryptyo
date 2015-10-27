@@ -12,18 +12,12 @@
                 - <a href="{{ path('fos_user_profile_edit') }}">Modifier ton profil</a> </br>
                 - <a href="{{ path('fos_user_security_logout') }}">Se déconnecter</a>
             </p>
-
-            <p>
-
-                    {{ form_widget(addfriends.destinataire) }}
-                {{ form_widget(addfriends.submit) }}
-
-            </p>
         </div>
 
         <div class="col-md-1"></div>
 
         <div class="col-md-7 profile__notification">
+
             <div class="row row__sendMessage">
                 <div class="col-md-5">
                     <h4>Décrypter un message :</h4>
@@ -42,7 +36,6 @@
             </div>
 
             <div class="row row__seeMessage">
-
                 <div class="col-md-12">
                     <h4> Mes messages :</h4>
                     <table>
@@ -84,6 +77,9 @@
                 </div>
             {% endfor %}
             {{ form_start(form) }}
+            <div class="hidden">
+                {{ form_widget(form.auteur, {'value' : user.username})  }}
+            </div>
             {{ form_widget(form.message, {'attr': {'class' : 'form-control', 'rows':'3', 'placeholder':'Crypt Your Octet ...', 'maxlength':'255'}}) }}
             <div class="input-group form__destinataire">
                 <span class="input-group-addon" id="basic-addon1">@</span>
