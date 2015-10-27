@@ -47,20 +47,58 @@
                         </thead>
 
                         <tbody>
-
+                        {% set page = '' %}
                         {% for message in messages|reverse %}
-                            {% if loop.index < 10 %}
-                                <tr>
+                            {% if loop.index < 6 %}
+                                <tr class="page1">
                                     <td>{{ message.id }}</td>
                                     <td>{{ message.auteur|capitalize }}</td>
-                                    <td class="td__message" onclick="putIdValue({{ message.id }})">{{ message.message[:73] }}</td>
+                                    <td class="td__message" onclick="putIdValue({{ message.id }})">{{ message.message[:70] }}</td>
                                 </tr>
-                            {% else %}
+                            {% elseif loop.index < 11 %}
+                                <tr class="page1 display__none" style="display:none">
+                                    <td>{{ message.id }}</td>
+                                    <td>{{ message.auteur|capitalize }}</td>
+                                    <td class="td__message" onclick="putIdValue({{ message.id }})">{{ message.message[:70] }}</td>
+                                </tr>
+                            {% elseif loop.index < 21 %}
+                                {% set page = '2' %}
+                            {% elseif loop.index < 31 %}
+                                {% set page = '3' %}
+                            {% elseif loop.index < 41 %}
+                                {% set page = '4' %}
+                            {% elseif loop.index < 51 %}
+                                {% set page = '5' %}
+                            {% elseif loop.index < 61 %}
+                                {% set page = '6' %}
+                            {% elseif loop.index < 71 %}
+                                {% set page = '7' %}
+                            {% elseif loop.index < 81 %}
+                                {% set page = '8' %}
+                            {% elseif loop.index < 91 %}
+                                {% set page = '9' %}
+                            {% elseif loop.index < 101 %}
+                                {% set page = '10' %}
+                            {% elseif loop.index < 111 %}
+                                {% set page = '11' %}
                             {% endif %}
+
+                            <tr class="page{{ page }} display__none" style="display:none">
+                                <td>{{ message.id }}</td>
+                                <td>{{ message.auteur|capitalize }}</td>
+                                <td class="td__message" onclick="putIdValue({{ message.id }})">{{ message.message[:70] }}</td>
+                            </tr>
+
                         {% endfor %}
 
                         </tbody>
                     </table>
+                    <div class="plus__message">
+                        <p id="voirPlus" class="voirPlus"><a href="#" onclick="plus()">Voir plus ...</a></p>
+
+                        <p id="moinsPage" class="switch__page" style="display: none"><a href="#" onclick="moinsPage()">< Page précedente </a></p>
+                        <p id="plusPage" class="switch__page" style="display: none"><a href="#" onclick="plusPage()"> Page suivante ></a></p>
+                    </div>
                 </div>
             </div>
 
@@ -70,7 +108,7 @@
     <div class="row">
         <div class="col-md-offset-5 col-md-7 profile__zoneTexte">
 
-            <h4> Nouveau message :</h4>
+            <h4> Envoyer un message :</h4>
             {% for flashMessage in app.session.flashbag.get('notice') %}
                 <div class="flash-notice alert alert-success" role="alert">
                     {{ flashMessage }}
@@ -80,11 +118,12 @@
             <div class="hidden">
                 {{ form_widget(form.auteur, {'value' : user.username})  }}
             </div>
-            {{ form_widget(form.message, {'attr': {'class' : 'form-control', 'rows':'3', 'placeholder':'Crypt Your Octet ...', 'maxlength':'255'}}) }}
+            <div class="col-md-8">
+                {{ form_widget(form.message, {'attr': {'class' : 'form-control', 'rows':'3', 'placeholder':'Crypt ton octet..', 'maxlength':'255'}}) }}
+            </div>
             <div class="input-group form__destinataire">
                 <span class="input-group-addon" id="basic-addon1">@</span>
                 {{ form_widget(form.destinataire, {'attr': {'class' : 'form-control', 'aria-describedby':'basic-addon1', 'placeholder':'Destinataire'}}) }}
-                                                    <!--Attribution de class en twig-->
             </div>
 
             {{ form_widget(form.save, { 'label': 'Envoyer', 'attr': {'class' : 'btn btn-primary btn-send center'}}) }}
