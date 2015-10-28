@@ -16,25 +16,36 @@
 
     <div class="row banniere">
 
-        <div class="col-md-5 logo">
-            <a href="{{ path('fos_user_profile_show') }}">
-                <img class="header__logo" src="{{ asset('bundles/cryptyohome/images/cryptyo1.png') }}" alt="...">
-                <h1> Crypt Your Octet </h1>
-            </a>
-        </div>
-
         {% if app.user and (app.request.attributes.get('_route') == 'crypt_yo_home_homepage') %}
+            <div class="col-md-5 logo">
+                <a href="{{ path('fos_user_profile_show') }}">
+                    <img class="header__logo" src="{{ asset('bundles/cryptyohome/images/cryptyo1.png') }}" alt="...">
+                    <h1> Crypt Your Octet </h1>
+                </a>
+            </div>
             <div class="col-md-2"></div>
             <div class="col-md-4 header__logged">
                 <h3>Bienvenue {{ app.user.username }}</h3>
                 <h5><a href="{{ path('fos_user_profile_show') }}">Connexion à votre espace</a></h5>
             </div>
         {% elseif app.user %}
+            <div class="col-md-5 logo">
+                <a href="{{ path('fos_user_profile_show') }}">
+                    <img class="header__logo" src="{{ asset('bundles/cryptyohome/images/cryptyo1.png') }}" alt="...">
+                    <h1> Crypt Your Octet </h1>
+                </a>
+            </div>
             <div class="col-md-4"></div>
             <div class="col-md-2 header__logout">
-                <a href=" {{ path('fos_user_security_logout') }}">Se déconnecter</a>
+                <a href=" {{ path('fos_user_security_logout') }}"><i class="fa fa-sign-out"></i> Déconnexion</a>
             </div>
         {% else %}
+            <div class="col-md-4 logo">
+                <a href="{{ path('fos_user_profile_show') }}">
+                    <img class="header__logo" src="{{ asset('bundles/cryptyohome/images/cryptyo1.png') }}" alt="...">
+                    <h1> Crypt Your Octet </h1>
+                </a>
+            </div>
         <div class="col-md-3 text-center">
             <a href="{{ path('fos_user_registration_register') }}"> <button class="btn btn-danger btn-inscr">Je m'inscris</button> </a>
         </div>
@@ -49,7 +60,7 @@
                 <input type="password" name="_password" required="required" style="margin-right: -3px"/>
 
                 <br/>
-                <button class="btn btn-primary btn__retour" type="submit">Se connecter</button>
+                <button class="btn btn-primary btn__retour" type="submit"><i class="fa fa-sign-in"></i> Se connecter </button>
             </form>
         </div>
 

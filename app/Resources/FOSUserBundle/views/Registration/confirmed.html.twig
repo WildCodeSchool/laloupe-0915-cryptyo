@@ -6,11 +6,13 @@
     <div class="row">
         <div class="col-md-4 col-md-offset-4 profile__zoneTexte">
 
-            <h4>Félicitations !</h4>
+            <h4 class="valid_inscription"><i class="fa fa-check"></i> Inscription réussie.</h4>
             <div class="message__recu">
-                <p>Inscription réussie.<br />
-                Bienvenue à <span id="pseudo__inscrit">{{ user.username }}</span> !</p></div>
-            <a class="btn btn-primary btn__retour" href={{ path('fos_user_profile_show') }}>Se connecter</a>
+                <p>
+                    Bienvenue <span id="pseudo__inscrit">{{ user.username }}</span> !
+                    <a class="btn btn-primary btn__retour" href={{ path('fos_user_profile_show') }}>Voir ton profil</a>
+                </p>
+            </div>
         </div>
 
     </div>
