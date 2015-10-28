@@ -3,7 +3,6 @@
 <div class="container">
 
     <div class="row">
-
         <div class="col-md-4 fos_user_user_show profile__info ">
             <h4> Espace abonné :</h4>
             <p><b>Login:</b> {{ user.username }}</p>
@@ -36,6 +35,7 @@
             </div>
 
             <div class="row row__seeMessage">
+
                 <div class="col-md-12">
                     <h4> Mes messages :
                         <span id="openCross" style="display: none"><a href="#" onclick="openMessage()" ><i class="fa fa-plus-square-o"></i></a></span>
@@ -113,7 +113,27 @@
     </div>
 
     <div class="row">
-        <div class="col-md-offset-5 col-md-7 profile__zoneTexte">
+
+        <div class="col-md-4 fos_user_user_show profile__zoneTexte">
+            <h4> Mes amis :</h4>
+            {% for flashMessage in app.session.flashbag.get('addami') %}
+                <div class="flash-notice alert alert-success" role="alert">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
+           
+            {{ form_start(friendsForm) }}
+            <div class="hidden">
+                <p>{{ form_widget(friendsForm.friendOne, {'value' : user.id}) }}</p>
+            </div>
+            <p>{{ form_widget(friendsForm.friendTwo, {'attr': {'placeholder':'Nom de l\'ami...'}}) }}</p>
+            <p>{{ form_widget(friendsForm.save, {'label': 'Ajouter', 'attr': {'class' : 'input__save'}}) }}</p>
+            {{ form_end(friendsForm) }}
+        </div>
+
+        <div class="col-md-1"></div>
+
+        <div class="col-md-7 profile__zoneTexte">
 
             <h4> Envoyer un message :</h4>
             {% for flashMessage in app.session.flashbag.get('notice') %}
@@ -139,4 +159,4 @@
         </div>
 
     </div>
-    </div>
+</div>
