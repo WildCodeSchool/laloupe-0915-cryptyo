@@ -58,7 +58,7 @@ class ProfileController extends BaseController
         $userName = $user->getUsername();
         $em = $this->getDoctrine()->getManager();
         $userMessages = $em->getRepository('CryptYOHomeBundle:Message')->findBy(array('destinataire' => $userName));
-        $showFriend = $em->getRepository('CryptYOHomeBundle:Friends')->findAll();
+        $showFriend = $em->getRepository('CryptYOHomeBundle:User')->findAll();
 
         return $this->render('FOSUserBundle:Profile:show.html.twig', array(
             'user' => $user,
@@ -66,7 +66,7 @@ class ProfileController extends BaseController
             'decryptForm' => $decryptForm->createView(),
             'messages' => $userMessages,
             'friendsForm' => $friendsForm->createView(),
-            'showFriend' => $showFriend
+            'showFriends' => $showFriend
         ));
     }
 

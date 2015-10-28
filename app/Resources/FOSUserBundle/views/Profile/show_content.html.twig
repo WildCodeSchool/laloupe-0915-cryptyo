@@ -121,7 +121,7 @@
                     {{ flashMessage }}
                 </div>
             {% endfor %}
-            {{ dump(showFriend) }}
+            
             {{ form_start(friendsForm) }}
             <div class="hidden">
                 <p>{{ form_widget(friendsForm.friendOne, {'value' : user.id}) }}</p>
