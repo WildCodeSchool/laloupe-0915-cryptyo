@@ -233,12 +233,17 @@ table {
 .switch__page{
     padding:20px;
 }
+
+#pseudo__inscrit {
+    color: #286090;
+}
 #closeCross {
     float:right;
 }
 #openCross {
     float:right;
 }
+
 #currentPage {
     display: inline-block;
     color: #337AB7;
@@ -252,4 +257,7 @@ table {
     background-color: #88C3E0;
     padding-top: 10px;
     padding-bottom: 10px;
+}
+#openCross a{
+    color: white;
 }
