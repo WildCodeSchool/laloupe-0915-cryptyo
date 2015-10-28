@@ -115,7 +115,7 @@ table {
     color: white;
 }
 .btn-inscr {
-    margin-top: 35px;
+    margin-top: 20px;
     margin-bottom: 20px;
     padding-left: 50px!important;
     padding-right: 50px;
@@ -195,7 +195,7 @@ table {
     padding-bottom: 5px;
 }
 .row__seeMessage {
-    margin-top: 23px;
+    margin-top: 33px;
     background-color: #C8E6F5;
 }
 .message__recu {
@@ -227,11 +227,12 @@ table {
 }
 .plus__message {
     text-align: center;
-    margin-top: 10px;
+    margin-top: 20px;
     font-size: 1.1em;
 }
 .switch__page{
     padding:20px;
+    padding-top:0;
 }
 
 #pseudo__inscrit {

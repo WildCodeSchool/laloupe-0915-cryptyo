@@ -82,3 +82,8 @@ function openMessage(){
     document.getElementById('openCross').style.display = "none";
     document.getElementsByClassName('profile__zoneTexte')[0].style.marginTop = "20px";
 }
+
+
+function explode(){
+    document.getElementById('flashSendMessage').style.display = "none";
+}setTimeout(explode, 5000);

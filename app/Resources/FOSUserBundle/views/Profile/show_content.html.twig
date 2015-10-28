@@ -3,6 +3,14 @@
 <div class="container">
 
     <div class="row">
+        {% for flashMessage in app.session.flashbag.get('notice') %}
+            <div id="flashSendMessage" class="flash-notice alert alert-success" role="alert">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="row">
         <div class="col-md-4 fos_user_user_show profile__info ">
             <h4> Espace abonné :</h4>
             <p><b>Login:</b> {{ user.username }}</p>
@@ -116,11 +124,6 @@
 
         <div class="col-md-4 fos_user_user_show profile__zoneTexte">
             <h4> Mes amis :</h4>
-            {% for flashMessage in app.session.flashbag.get('addami') %}
-                <div class="flash-notice alert alert-success" role="alert">
-                    {{ flashMessage }}
-                </div>
-            {% endfor %}
            
             {{ form_start(friendsForm) }}
             <div class="hidden">
@@ -136,11 +139,7 @@
         <div class="col-md-7 profile__zoneTexte">
 
             <h4> Envoyer un message :</h4>
-            {% for flashMessage in app.session.flashbag.get('notice') %}
-                <div class="flash-notice alert alert-success" role="alert">
-                    {{ flashMessage }}
-                </div>
-            {% endfor %}
+
             {{ form_start(form) }}
             <div class="hidden">
                 {{ form_widget(form.auteur, {'value' : user.username})  }}
