@@ -121,7 +121,15 @@
                     {{ flashMessage }}
                 </div>
             {% endfor %}
-            
+            {% for flashMessage in app.session.flashbag.get('paspresent') %}
+                <div class="flash-notice alert alert-success" role="alert">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
+            {% for showFriend in showFriends %}
+            {{ showFriend.friendTwo }}<br />
+            {% endfor %}
+
             {{ form_start(friendsForm) }}
             <div class="hidden">
                 <p>{{ form_widget(friendsForm.friendOne, {'value' : user.id}) }}</p>

@@ -19,6 +19,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use CryptYO\HomeBundle\Entity\Message;
 use CryptYO\HomeBundle\Form\Type\MessageType;
 use CryptYO\HomeBundle\Form\Type\FriendsType;
+//use Symfony\Component\Security\Core\Util\StringUtils;
 
 /**
  * Controller managing the user profile
@@ -58,7 +59,7 @@ class ProfileController extends BaseController
         $userName = $user->getUsername();
         $em = $this->getDoctrine()->getManager();
         $userMessages = $em->getRepository('CryptYOHomeBundle:Message')->findBy(array('destinataire' => $userName));
-        $showFriend = $em->getRepository('CryptYOHomeBundle:User')->findAll();
+        $showFriend = $em->getRepository('CryptYOHomeBundle:Friends')->findByAll();
 
         return $this->render('FOSUserBundle:Profile:show.html.twig', array(
             'user' => $user,
@@ -150,17 +151,28 @@ class ProfileController extends BaseController
         $form = $this->createForm(new FriendsType(), $friend);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
-
-            $this->addFlash(
-                'addami',
-                'Ami bien ajouté !'
-            );
 
             $em = $this->getDoctrine()->getManager();
-            $em->persist($friend);
-            $em->flush();
-        }
+            //$showFriend = $em->getRepository('CryptYOHomeBundle:User')->findAll();
+//            if () {
+                if ($form->isValid()) {
+
+                    $this->addFlash(
+                        'addami',
+                        'Ami bien ajouté !'
+                    );
+                    $em->persist($friend);
+                    $em->flush();
+                }
+            /*}
+            else
+            {
+                $this->addFlash(
+                    'paspresent',
+                    'Cette personne n\'est pas dans la liste des inscrits !'
+                );*/
+
+
 
         return $this->redirect($this->generateUrl('fos_user_profile_show'));
 

@@ -29,9 +29,9 @@ class Friends
     private $friendOne;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="friendTwo", type="integer")
+     * @ORM\Column(name="friendTwo", type="string")
      */
     private $friendTwo;
 
@@ -73,7 +73,7 @@ class Friends
     /**
      * Set friendTwo
      *
-     * @param integer $friendTwo
+     * @param string $friendTwo
      *
      * @return Friends
      */
@@ -87,7 +87,7 @@ class Friends
     /**
      * Get friendTwo
      *
-     * @return integer
+     * @return string
      */
     public function getFriendTwo()
     {
