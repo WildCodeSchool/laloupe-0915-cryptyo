@@ -11,12 +11,14 @@
 
 namespace CryptYO\HomeBundle\Controller;
 
+use CryptYO\HomeBundle\Entity\Friends;
 use FOS\UserBundle\Controller\ProfileController as BaseController;
 use FOS\UserBundle\Model\UserInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use CryptYO\HomeBundle\Entity\Message;
 use CryptYO\HomeBundle\Form\Type\MessageType;
+use CryptYO\HomeBundle\Form\Type\FriendsType;
 
 /**
  * Controller managing the user profile
@@ -41,12 +43,18 @@ class ProfileController extends BaseController
             ->add('save', 'submit')
             ->getForm();
 
+
+        $friendsForm = $this->createForm(new FriendsType(), new Friends(), array(
+            'action' => $this->generateUrl('crypt_yo_add_friends'),
+            'method' => 'POST',
+        ));
+
         $user = $this->getUser();
         if (!is_object($user) || !$user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');
         }
 
-        // On récupère tous les message de l'utilisateur connécté
+        // On récupère tous les messages de l'utilisateur connecté
         $userName = $user->getUsername();
         $em = $this->getDoctrine()->getManager();
         $userMessages = $em->getRepository('CryptYOHomeBundle:Message')->findBy(array('destinataire' => $userName));
@@ -55,7 +63,8 @@ class ProfileController extends BaseController
             'user' => $user,
             'form' => $form->createView(),
             'decryptForm' => $decryptForm->createView(),
-            'messages' => $userMessages
+            'messages' => $userMessages,
+            'friendsForm' => $friendsForm->createView()
         ));
     }
 
@@ -133,6 +142,33 @@ class ProfileController extends BaseController
         }
     }
 
+    public function addFriendsAction(Request $request)
+    {
+        $friend = new Friends();
+        $form = $this->createForm(new FriendsType(), $friend);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $this->addFlash(
+                'addami',
+                'Ami bien ajouté !'
+            );
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($friend);
+            $em->flush();
+
+
+            $em = $this->getDoctrine()->getManager();
+            $showFriend = $em->getRepository('CryptYOHomeBundle:Friends')->findAll();
+
+            return $this->redirect($this->generateUrl('fos_user_profile_show', array(
+                'showFriend' => $showFriend
+            )));
+        }
+    }
+
 
 
     private function decryptMessage($cryptedMessage, $sel)
@@ -182,4 +218,5 @@ class ProfileController extends BaseController
         return array($cryptedMessage, $rand);
 
     }
+
 }
