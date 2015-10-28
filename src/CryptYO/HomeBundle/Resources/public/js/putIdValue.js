@@ -1,6 +1,9 @@
 /**
  * Created by erwan on 21/10/15.
  */
+
+//Ajout de l'id dans le champ de decryptage lors du clic sur le lien
+
 function putIdValue($id){
     var textId = document.getElementById('form_id');
     var textSel = document.getElementById('form_sel');
@@ -8,17 +11,9 @@ function putIdValue($id){
     textSel.placeholder = 'Entre ton sel';
 }
 
-/*function plus(){
-    var hiddenTr = document.getElementsByClassName('display__none')[0];
-    hiddenTr.style.display = "";
-}*/
-/*
-function plusMessage (element, index, array) {
-    console.log(element);
-    console.log(index);
-    console.log(array);
-}
-*/
+
+// Pagination des message
+
 function plus() {
     [].forEach.call(document.getElementsByClassName('page1'), function(v, i, a){
         v.style.display = "table-row";
@@ -27,6 +22,10 @@ function plus() {
     document.getElementById('voirPlus').style.display = "none";
     document.getElementById('plusPage').style.display = "inline-block";
 }
+
+
+var maxPage = document.getElementById('maxPage').getAttribute('data-value');
+var maxPageFloor = Math.floor(maxPage/10);
 
 var currentPage = 1; var goToPage;
 function plusPage() {
@@ -41,7 +40,8 @@ function plusPage() {
     currentPage++;
 
     document.getElementById('moinsPage').style.display = "inline-block";
-    if (goToPage > 10) {
+
+    if (goToPage > maxPageFloor) {
         document.getElementById('plusPage').style.display = "none";
     }
 }
@@ -60,4 +60,21 @@ function moinsPage() {
     if (goToPage < 2) {
         document.getElementById('moinsPage').style.display = "none";
     }
+    if (goToPage = maxPageFloor) {
+        document.getElementById('plusPage').style.display = "inline-block";
+    }
+}
+
+// Fermer la fenetre des messages
+
+function closeMessage(){
+    document.getElementById('messageTable').style.display = "none";
+    document.getElementById('closeCross').style.display = "none";
+    document.getElementById('openCross').style.display = "inline-block";
+
+};
+function openMessage(){
+    document.getElementById('messageTable').style.display = "block";
+    document.getElementById('closeCross').style.display = "inline-block";
+    document.getElementById('openCross').style.display = "none";
 }

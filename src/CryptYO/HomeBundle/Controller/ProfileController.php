@@ -158,7 +158,7 @@ class ProfileController extends BaseController
             $em = $this->getDoctrine()->getManager();
             $em->persist($friend);
             $em->flush();
-
+        }
 
             $em = $this->getDoctrine()->getManager();
             $showFriend = $em->getRepository('CryptYOHomeBundle:Friends')->findAll();
@@ -166,7 +166,7 @@ class ProfileController extends BaseController
             return $this->redirect($this->generateUrl('fos_user_profile_show', array(
                 'showFriend' => $showFriend
             )));
-        }
+
     }
 
 

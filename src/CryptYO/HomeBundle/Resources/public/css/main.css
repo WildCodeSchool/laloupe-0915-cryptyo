@@ -230,7 +230,21 @@ h4 {
 .switch__page{
     padding:20px;
 }
+<<<<<<< HEAD
 
 #pseudo__inscrit {
     color: #286090;
+=======
+#closeCross {
+    float:right;
+}
+#closeCross a{
+    color: white;
+}
+#openCross {
+    float:right;
+}
+#openCross a{
+    color: white;
+>>>>>>> d67eb034f7a848438ddb90cc8bb1f7dea423e5b0
 }
