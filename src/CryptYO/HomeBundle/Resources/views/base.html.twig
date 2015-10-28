@@ -60,7 +60,7 @@
                 <input type="password" name="_password" required="required" style="margin-right: -3px"/>
 
                 <br/>
-                <button class="btn btn-primary btn__retour" type="submit">Se connecter </button>
+                <button class="btn btn-primary btn__retour" type="submit"><i class="fa fa-sign-in"></i> Se connecter </button>
             </form>
         </div>
 
@@ -72,6 +72,7 @@
         {% block javascripts %}
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
             <script src="{{ asset('bundles/cryptyohome/js/bootstrap.min.js') }}"></script>
+            <script src="{{ asset('bundles/cryptyohome/js/putIdValue.js') }}"></script>
         {% endblock %}
     </body>
 </html>

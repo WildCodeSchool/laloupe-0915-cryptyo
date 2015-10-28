@@ -82,5 +82,6 @@ function openMessage(){
 }
 
 function explode(){
-    document.getElementById('flashSendMessage').style.display = "none";
+    $( "#flashSendMessage" ).hide(1000);
+    console.log('it work');
 }setTimeout(explode, 5000);

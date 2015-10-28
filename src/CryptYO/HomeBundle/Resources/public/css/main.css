@@ -88,7 +88,8 @@ table {
     color: white;
 }
 .banniere .home__form button{
-    width: 187px;
+    padding-right: 24px;
+    padding-left: 24px;
 }
 .info__edit input{
     margin-left: 10px;
@@ -119,7 +120,7 @@ table {
     margin-bottom: 20px;
     padding-left: 50px!important;
     padding-right: 50px;
-    font-size: 1.5em;
+    font-size: 1.3em;
 }
 .btn-send {
     padding-left: 10px!important;
@@ -200,11 +201,10 @@ table {
 }
 .message__recu {
     text-align: center;
-    font-size: 2em;
+    font-size: 1.5em;
 }
 .btn__retour {
     float: right;
-    margin-top: 10px;
 }
 .btn__retour2 {
     float: left;
@@ -260,4 +260,12 @@ table {
 }
 #openCross a{
     color: white;
+}
+
+.valid_inscription i {
+    font-size: 1.4em;
+    margin-right:20px;
+}
+.message__recu {
+    margin-top: 20px;
 }

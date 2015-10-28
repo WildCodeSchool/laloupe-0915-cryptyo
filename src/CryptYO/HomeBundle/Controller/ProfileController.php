@@ -60,6 +60,8 @@ class ProfileController extends BaseController
         $userMessages = $em->getRepository('CryptYOHomeBundle:Message')->findBy(array('destinataire' => $userName));
         $showFriend = $em->getRepository('CryptYOHomeBundle:Friends')->findAll();
 
+
+
         return $this->render('FOSUserBundle:Profile:show.html.twig', array(
             'user' => $user,
             'form' => $form->createView(),

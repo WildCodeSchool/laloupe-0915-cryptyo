@@ -14,7 +14,7 @@
         <div class="col-md-4 fos_user_user_show">
             <div class="row profile__info">
                 <h4> <i class="fa fa-user"></i> Mon profil</h4>
-                <p><b>Login:</b> {{ user.username }}</p>
+                <p><b>Utilisateur:</b> {{ user.username }}</p>
                 <p><b>Email:</b> {{ user.email }}</p>
                 <p>
                     <a href="{{ path('fos_user_profile_edit') }}"><i class="fa fa-pencil-square-o"></i> Modifier profil</a> </br>
@@ -157,6 +157,3 @@
     </div>
 </div>
 
-{% block javascripts %}
-<script src="{{ asset('bundles/cryptyohome/js/putIdValue.js') }}"></script>
-{% endblock %}
