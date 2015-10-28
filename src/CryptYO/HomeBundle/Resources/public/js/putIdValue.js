@@ -74,11 +74,13 @@ function closeMessage(){
     document.getElementById('messageTable').style.display = "none";
     document.getElementById('closeCross').style.display = "none";
     document.getElementById('openCross').style.display = "inline-block";
-    document.getElementsByClassName('profile__zoneTexte')[0].style.marginTop = "0";
 };
 function openMessage(){
     document.getElementById('messageTable').style.display = "block";
     document.getElementById('closeCross').style.display = "inline-block";
     document.getElementById('openCross').style.display = "none";
-    document.getElementsByClassName('profile__zoneTexte')[0].style.marginTop = "20px";
 }
+
+function explode(){
+    document.getElementById('flashSendMessage').style.display = "none";
+}setTimeout(explode, 5000);
