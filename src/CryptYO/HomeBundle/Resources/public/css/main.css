@@ -16,9 +16,11 @@ body {
 }
 
 .btn-inscr {
-    margin-top: 22px;
+    margin-top: 35px;
+    margin-bottom: 20px;
     padding-left: 50px!important;
     padding-right: 50px;
+    font-size: 1.5em;
 }
 .btn-send {
     padding-left: 10px!important;
@@ -73,13 +75,14 @@ body {
     font-family: 'logo__font';
     src: url('../fonts/logo__header.ttf');
 }
-.logo {
+.logo a {
     font-family: 'logo__font', 'Roboto', sans-serif;
+    color: white;
 }
 body {
     font-family: 'Source Sans Pro', sans-serif;
 }
-.banniere input {
+.banniere input, .info__edit input {
     background-color: white!important;
     -webkit-box-shadow: 0 0 0px 1000px white inset;
     -webkit-border-radius: 6px;
@@ -103,10 +106,10 @@ body {
     line-height: 20px;
 }
 
-.profile__info h4, .profile__notification h4, .profile__zoneTexte h4{
+.home__form h4, .profile__info h4, .profile__notification h4, .profile__zoneTexte h4{
     text-align: center;
     font-size: 1.5em;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     padding: 6px 12px;
     background-color: #81B3CC;
 }
@@ -241,4 +244,14 @@ h4 {
 }
 #openCross a{
     color: white;
+}
+
+.fos_user_registration_register label{
+    margin-right:10px;
+}
+.fos_user_registration_register input{
+    width: 200px;
+}
+.home__form .block__title {
+    background-color: #337AB7;
 }

@@ -4,7 +4,7 @@
 
     <div class="row">
 
-        <div class="col-md-4 fos_user_user_show profile__info">
+        <div class="col-md-4 fos_user_user_show profile__info ">
             <h4> Espace abonné :</h4>
             <p><b>Login:</b> {{ user.username }}</p>
             <p><b>Email:</b> {{ user.email }}</p>
@@ -92,7 +92,9 @@
                                     <td>{{ message.auteur|capitalize }}</td>
                                     <td class="td__message" onclick="putIdValue({{ message.id }})">{{ message.message[:70] }}</td>
                                 </tr>
-                                <div id="maxPage" data-value="{{ loop.length }}" style="display:none"></div>
+                                {% if loop.first %}
+                                    <div id="maxPage" data-value="{{ loop.length }}" style="display:none"></div>
+                                {% endif %}
                             {% endfor %}
                             </tbody>
                         </table>

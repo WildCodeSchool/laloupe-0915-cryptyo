@@ -17,8 +17,10 @@
     <div class="row banniere">
 
         <div class="col-md-5 logo">
-            <img class="header__logo" src="{{ asset('bundles/cryptyohome/images/cryptyo1.png') }}" alt="...">
-            <h1> Crypt Your Octet </h1>
+            <a href="{{ path('fos_user_profile_show') }}">
+                <img class="header__logo" src="{{ asset('bundles/cryptyohome/images/cryptyo1.png') }}" alt="...">
+                <h1> Crypt Your Octet </h1>
+            </a>
         </div>
 
         {% if app.user and (app.request.attributes.get('_route') == 'crypt_yo_home_homepage') %}
