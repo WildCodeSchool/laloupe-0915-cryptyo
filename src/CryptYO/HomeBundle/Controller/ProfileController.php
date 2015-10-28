@@ -58,13 +58,15 @@ class ProfileController extends BaseController
         $userName = $user->getUsername();
         $em = $this->getDoctrine()->getManager();
         $userMessages = $em->getRepository('CryptYOHomeBundle:Message')->findBy(array('destinataire' => $userName));
+        $showFriend = $em->getRepository('CryptYOHomeBundle:Friends')->findAll();
 
         return $this->render('FOSUserBundle:Profile:show.html.twig', array(
             'user' => $user,
             'form' => $form->createView(),
             'decryptForm' => $decryptForm->createView(),
             'messages' => $userMessages,
-            'friendsForm' => $friendsForm->createView()
+            'friendsForm' => $friendsForm->createView(),
+            'showFriend' => $showFriend
         ));
     }
 
@@ -160,12 +162,7 @@ class ProfileController extends BaseController
             $em->flush();
         }
 
-            $em = $this->getDoctrine()->getManager();
-            $showFriend = $em->getRepository('CryptYOHomeBundle:Friends')->findAll();
-
-            return $this->redirect($this->generateUrl('fos_user_profile_show', array(
-                'showFriend' => $showFriend
-            )));
+        return $this->redirect($this->generateUrl('fos_user_profile_show'));
 
     }
 
