@@ -2,7 +2,7 @@
  * Created by erwan on 21/10/15.
  */
 
-//Ajout de l'id dans le champ de decryptage lors du clic sur le lien
+//Ajout de l'id dans le champ de decryptage lors du clic sur le message
 
 function putIdValue($id){
     var textId = document.getElementById('form_id');
@@ -12,7 +12,7 @@ function putIdValue($id){
 }
 
 
-// Pagination des message
+// Pagination des messages
 
 function plus() {
     [].forEach.call(document.getElementsByClassName('page1'), function(v, i, a){
@@ -39,6 +39,7 @@ function plusPage() {
     });
     currentPage++;
 
+    document.getElementById('currentPage').innerHTML = goToPage;
     document.getElementById('moinsPage').style.display = "inline-block";
 
     if (goToPage > maxPageFloor) {
@@ -57,6 +58,8 @@ function moinsPage() {
     });
     currentPage--;
 
+    document.getElementById('currentPage').innerHTML = goToPage;
+
     if (goToPage < 2) {
         document.getElementById('moinsPage').style.display = "none";
     }
@@ -71,10 +74,11 @@ function closeMessage(){
     document.getElementById('messageTable').style.display = "none";
     document.getElementById('closeCross').style.display = "none";
     document.getElementById('openCross').style.display = "inline-block";
-
+    document.getElementsByClassName('profile__zoneTexte')[0].style.marginTop = "0";
 };
 function openMessage(){
     document.getElementById('messageTable').style.display = "block";
     document.getElementById('closeCross').style.display = "inline-block";
     document.getElementById('openCross').style.display = "none";
+    document.getElementsByClassName('profile__zoneTexte')[0].style.marginTop = "20px";
 }
