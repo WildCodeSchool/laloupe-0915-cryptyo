@@ -10,7 +10,7 @@ class FriendsType extends AbstractType
     {
         $builder
             ->add('friendOne', 'integer')
-            ->add('friendTwo', 'text')
+            ->add('friendTwo', 'integer')
             ->add('save', 'submit')
         ;
     }

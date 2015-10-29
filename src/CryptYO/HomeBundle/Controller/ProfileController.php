@@ -59,7 +59,7 @@ class ProfileController extends BaseController
         $userName = $user->getUsername();
         $em = $this->getDoctrine()->getManager();
         $userMessages = $em->getRepository('CryptYOHomeBundle:Message')->findBy(array('destinataire' => $userName));
-        $showFriend = $em->getRepository('CryptYOHomeBundle:Friends')->findByAll();
+        $showFriend = $em->getRepository('CryptYOHomeBundle:Friends')->findAll();
 
         return $this->render('FOSUserBundle:Profile:show.html.twig', array(
             'user' => $user,
@@ -151,10 +151,6 @@ class ProfileController extends BaseController
         $form = $this->createForm(new FriendsType(), $friend);
         $form->handleRequest($request);
 
-
-            $em = $this->getDoctrine()->getManager();
-            //$showFriend = $em->getRepository('CryptYOHomeBundle:User')->findAll();
-//            if () {
                 if ($form->isValid()) {
 
                     $this->addFlash(
@@ -164,13 +160,7 @@ class ProfileController extends BaseController
                     $em->persist($friend);
                     $em->flush();
                 }
-            /*}
-            else
-            {
-                $this->addFlash(
-                    'paspresent',
-                    'Cette personne n\'est pas dans la liste des inscrits !'
-                );*/
+
 
 
 

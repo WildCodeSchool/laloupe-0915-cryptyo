@@ -23,15 +23,15 @@ class Friends
 
     /**
      * @var integer
-     *
-     * @ORM\Column(name="friendOne", type="integer")
+     * @ORM\OneToOne(targetEntity="CryptYO\HomeBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $friendOne;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="friendTwo", type="string")
+     * @var integer
+     * @ORM\OneToOne(targetEntity="CryptYO\HomeBundle\Entity\User", fetch="EAGER")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $friendTwo;
 
@@ -73,7 +73,7 @@ class Friends
     /**
      * Set friendTwo
      *
-     * @param string $friendTwo
+     * @param integer $friendTwo
      *
      * @return Friends
      */
@@ -87,7 +87,7 @@ class Friends
     /**
      * Get friendTwo
      *
-     * @return string
+     * @return integer
      */
     public function getFriendTwo()
     {
