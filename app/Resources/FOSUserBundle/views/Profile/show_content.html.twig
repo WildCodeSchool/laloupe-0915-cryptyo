@@ -170,10 +170,21 @@
                 <div class="col-md-8">
                     {{ form_widget(form.message, {'attr': {'class' : 'form-control', 'rows':'5', 'placeholder':'Crypt ton octet..', 'maxlength':'255'}}) }}
                 </div>
-                <div class="input-group form__destinataire">
+                <select name="destinataire">
+                    {% for showFriend in showFriends %}
+                    {% for allusers in users %}
+                    {% if allusers.id == showFriend.friendTwo %}
+                    <option value="0">{{ allusers.username }}</option>
+                    {% endif %}
+                    {% endfor %}
+                    {% endfor %}
+                </select>
+
+
+                {#<div class="input-group form__destinataire">
                     <span class="input-group-addon" id="basic-addon1">@</span>
                     {{ form_widget(form.destinataire, {'attr': {'class' : 'form-control', 'aria-describedby':'basic-addon1', 'placeholder':'Destinataire'}}) }}
-                </div>
+                </div>#}
 
                 {{ form_widget(form.save, { 'label': 'Envoyer', 'attr': {'class' : 'btn btn-primary btn-send center'}}) }}
 
