@@ -12,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Friends
 {
+
+
     /**
      * @var integer
      *
@@ -24,14 +26,18 @@ class Friends
     /**
      * @var integer
      * @ORM\OneToOne(targetEntity="CryptYO\HomeBundle\Entity\User")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(name="friendOne", type="integer")
+     * @ORM\JoinColumn(name="friendOne", referencedColumnName="id")
      */
     private $friendOne;
 
     /**
      * @var integer
      * @ORM\OneToOne(targetEntity="CryptYO\HomeBundle\Entity\User", fetch="EAGER")
-     * @ORM\JoinColumn(nullable=false)
+     ////////////////   fetch="EAGER", charge par défaut tous les utilisateurs
+     * @ORM\Column(name="friendTwo", type="integer")
+     * @ORM\JoinColumn(name="friendTwo", referencedColumnName="id")
+
      */
     private $friendTwo;
 

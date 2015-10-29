@@ -7,7 +7,7 @@ a:link, a:visited, a:hover, a:active {
 
 /*Balises générales*/
 body {
-    padding-bottom: 50px;
+    padding-bottom: 20px;
     font-family: 'Source Sans Pro', sans-serif;
 }
 
@@ -74,9 +74,6 @@ th {
 table {
     margin:auto;
 }
-.home__form label {
-    color: white;
-}
 
 .banniere input, .info__edit input {
     background-color: white!important;
@@ -86,12 +83,14 @@ table {
     border-radius: 6px;
     padding-left: 5px;
     margin-bottom: 5px;
+    color: #333;
 }
 .banniere .home__form label {
     color: white;
 }
 .banniere .home__form button{
-    width: 187px;
+    padding-right: 24px;
+    padding-left: 24px;
 }
 .info__edit input{
     margin-left: 10px;
@@ -114,12 +113,15 @@ table {
     padding-bottom: 10px;
     color: white;
 }
+.banniere .home__form {
+    background-color: #88C3E0;
+}
 .btn-inscr {
-    margin-top: 35px;
+    margin-top: 20px;
     margin-bottom: 20px;
     padding-left: 50px!important;
     padding-right: 50px;
-    font-size: 1.5em;
+    font-size: 1.3em;
 }
 .btn-send {
     padding-left: 10px!important;
@@ -195,16 +197,15 @@ table {
     padding-bottom: 5px;
 }
 .row__seeMessage {
-    margin-top: 23px;
+    margin-top: 20px;
     background-color: #C8E6F5;
 }
 .message__recu {
     text-align: center;
-    font-size: 2em;
+    font-size: 1.5em;
 }
 .btn__retour {
     float: right;
-    margin-top: 10px;
 }
 .btn__retour2 {
     float: left;
@@ -227,11 +228,12 @@ table {
 }
 .plus__message {
     text-align: center;
-    margin-top: 10px;
+    margin-top: 20px;
     font-size: 1.1em;
 }
 .switch__page{
     padding:20px;
+    padding-top:0px;
 }
 
 #pseudo__inscrit {
@@ -249,15 +251,22 @@ table {
     color: #337AB7;
 }
 .home__form .block__title {
-    background-color: #337AB7;
+    background-color: #81B3CC;
 }
 .home__form {
     text-align: right;
-    color: black;
-    background-color: #88C3E0;
+    background-color: #C8E6F5;
     padding-top: 10px;
     padding-bottom: 10px;
 }
 #openCross a{
     color: white;
+}
+
+.valid_inscription i {
+    font-size: 1.4em;
+    margin-right:20px;
+}
+.message__recu {
+    margin-top: 20px;
 }

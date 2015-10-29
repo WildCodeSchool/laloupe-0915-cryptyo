@@ -4,8 +4,8 @@
 
 {% block body %}
 
-
     <div class="container">
+        <a href="https://github.com/WildCodeSchool/projet-cryptyo"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
 
             <div class="row">
 
@@ -20,9 +20,6 @@
 
                                      data-toggle="popover" title="Bienvenue sur Crypt Your Octect" data-content="Inscrivez-vous sur Crypt Your Octect, une application qui vous permet d'envoyer des messages cryptés à vos amis." data-placement="right" />
 
-
-
-
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
@@ -34,93 +31,86 @@
                     </div>
 
 
-                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-                    <script src="bootstrap.min.js">
-                    </script>
+                </div>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+                <script src="{{ asset('bundles/cryptyohome/js/bootstrap.min.js') }}"></script>
+                <script>
+                    $(function () {
+                        $('[data-toggle="popover"]').popover('show')
+                    });
 
-                    <script>
-                        $(function () {
-                            $('[data-toggle="popover"]').popover('show')
-                        })
-                    </script>
-                    <script>
-                        function nextImg()
-                        {
+                    function nextImg() {
 
-                            var img = document.querySelector("#myImg");
+                        var img = document.querySelector("#myImg");
 
-                            if( img.alt == "slide1" ){
-                                img.src = "{{ asset('bundles/cryptyohome/images/slide2.gif') }}";
-                                img.alt = "slide2";
-                                var popover = document.getElementsByClassName('popover-content')[0];
-                                popover.innerHTML = "Une fois inscrit et connecté, vous accédez à votre tableau de bord.";
-                                var pop = document.getElementsByClassName('popover-title')[0];
-                                pop.innerHTML = "Tableau de bord";
-                            }
-                            else if ( img.alt == "slide2" ){
-                                img.src = "{{ asset('bundles/cryptyohome/images/slide3.gif') }}";
-                                img.alt = "slide3";
-                                var popover = document.getElementsByClassName('popover-content')[0];
-                                popover.innerHTML = "Vous trouverez un espace abonné en haut à gauche où vous pouvez changer vos informations personnelles.";
-                                var pop = document.getElementsByClassName('popover-title')[0];
-                                pop.innerHTML = "Espace abonné";
-
-                            }
-                            else if( img.alt == "slide3"){
-                                img.src = "{{ asset('bundles/cryptyohome/images/slide4.gif') }}";
-                                img.alt = "slide4";
-                                var popover = document.getElementsByClassName('popover-content')[0];
-                                popover.innerHTML = "Un encart en bas à droite vous permet d'envoyer des messages cryptés à vos amis.";
-                                var pop = document.getElementsByClassName('popover-title')[0];
-                                pop.innerHTML = "Nouveau message";
-                            }
-                            else if( img.alt == "slide4" ){
-                                img.src = "{{ asset('bundles/cryptyohome/images/slide5.gif') }}";
-                                img.alt = "slide5";
-                                var popover = document.getElementsByClassName('popover-content')[0];
-                                popover.innerHTML = "Vous visualiserez ensuite votre message codé dans l'encart \"Mes Messages\"";
-                                var pop = document.getElementsByClassName('popover-title')[0];
-                                pop.innerHTML = "Mes messages";
-                            }
-                            else if( img.alt == "slide5" ){
-                                img.src = "{{ asset('bundles/cryptyohome/images/slide6.gif') }}";
-                                img.alt = "slide6";
-                                var popover = document.getElementsByClassName('popover-content')[0];
-                                popover.innerHTML = "CryptYO vous envoie ensuite un sel (un code secret) qui vous permettra de décrypter le message.";
-                                var pop = document.getElementsByClassName('popover-title')[0];
-                                pop.innerHTML = "Le sel";
-                            }
-                            else if( img.alt == "slide6" ){
-                                img.src = "{{ asset('bundles/cryptyohome/images/slide7.gif') }}";
-                                img.alt = "slide7";
-                                var popover = document.getElementsByClassName('popover-content')[0];
-                                popover.innerHTML = "De retour sur votre tableau de bord, vous pourrez cliquer sur le message que vous souhaitez décrypter en y ajoutant \"votre grain de sel\".";
-                                var pop = document.getElementsByClassName('popover-title')[0];
-                                pop.innerHTML = "Décrypter le message";
-                            }
-                            else if( img.alt == "slide7" ){
-                                img.src = "{{ asset('bundles/cryptyohome/images/slide8.gif') }}";
-                                img.alt = "slide8";
-                                var popover = document.getElementsByClassName('popover-content')[0];
-                                popover.innerHTML = "Et voilà, votre message est décrypté ! :)";
-                                var pop = document.getElementsByClassName('popover-title')[0];
-                                pop.innerHTML = "Message décrypté";
-                            }
-                            else{
-                                img.src = "{{ asset('bundles/cryptyohome/images/slide1.gif') }}";
-                                img.alt = "slide1";
-                                var popover = document.getElementsByClassName('popover-content')[0];
-                                popover.innerHTML = "Inscrivez-vous sur Crypt Your Octect, une application qui vous permet d'envoyer des messages cryptés à vos amis.";
-                                var pop = document.getElementsByClassName('popover-title')[0];
-                                pop.innerHTML = "Bienvenue sur Crypt Your Octect";
-                            }
+                        if (img.alt == "slide1") {
+                            img.src = "{{ asset('bundles/cryptyohome/images/slide2.gif') }}";
+                            img.alt = "slide2";
+                            var popover = document.getElementsByClassName('popover-content')[0];
+                            popover.innerHTML = "Une fois inscrit et connecté, vous accédez à votre tableau de bord.";
+                            var pop = document.getElementsByClassName('popover-title')[0];
+                            pop.innerHTML = "Tableau de bord";
+                        }
+                        else if (img.alt == "slide2") {
+                            img.src = "{{ asset('bundles/cryptyohome/images/slide3.gif') }}";
+                            img.alt = "slide3";
+                            var popover = document.getElementsByClassName('popover-content')[0];
+                            popover.innerHTML = "Vous trouverez un espace abonné en haut à gauche où vous pouvez changer vos informations personnelles.";
+                            var pop = document.getElementsByClassName('popover-title')[0];
+                            pop.innerHTML = "Espace abonné";
 
                         }
-                    </script>
+                        else if (img.alt == "slide3") {
+                            img.src = "{{ asset('bundles/cryptyohome/images/slide4.gif') }}";
+                            img.alt = "slide4";
+                            var popover = document.getElementsByClassName('popover-content')[0];
+                            popover.innerHTML = "Un encart en bas à droite vous permet d'envoyer des messages cryptés à vos amis.";
+                            var pop = document.getElementsByClassName('popover-title')[0];
+                            pop.innerHTML = "Nouveau message";
+                        }
+                        else if (img.alt == "slide4") {
+                            img.src = "{{ asset('bundles/cryptyohome/images/slide5.gif') }}";
+                            img.alt = "slide5";
+                            var popover = document.getElementsByClassName('popover-content')[0];
+                            popover.innerHTML = "Vous visualiserez ensuite votre message codé dans l'encart \"Mes Messages\"";
+                            var pop = document.getElementsByClassName('popover-title')[0];
+                            pop.innerHTML = "Mes messages";
+                        }
+                        else if (img.alt == "slide5") {
+                            img.src = "{{ asset('bundles/cryptyohome/images/slide6.gif') }}";
+                            img.alt = "slide6";
+                            var popover = document.getElementsByClassName('popover-content')[0];
+                            popover.innerHTML = "CryptYO vous envoie ensuite un sel (un code secret) qui vous permettra de décrypter le message.";
+                            var pop = document.getElementsByClassName('popover-title')[0];
+                            pop.innerHTML = "Le sel";
+                        }
+                        else if (img.alt == "slide6") {
+                            img.src = "{{ asset('bundles/cryptyohome/images/slide7.gif') }}";
+                            img.alt = "slide7";
+                            var popover = document.getElementsByClassName('popover-content')[0];
+                            popover.innerHTML = "De retour sur votre tableau de bord, vous pourrez cliquer sur le message que vous souhaitez décrypter en y ajoutant \"votre grain de sel\".";
+                            var pop = document.getElementsByClassName('popover-title')[0];
+                            pop.innerHTML = "Décrypter le message";
+                        }
+                        else if (img.alt == "slide7") {
+                            img.src = "{{ asset('bundles/cryptyohome/images/slide8.gif') }}";
+                            img.alt = "slide8";
+                            var popover = document.getElementsByClassName('popover-content')[0];
+                            popover.innerHTML = "Et voilà, votre message est décrypté ! :)";
+                            var pop = document.getElementsByClassName('popover-title')[0];
+                            pop.innerHTML = "Message décrypté";
+                        }
+                        else {
+                            img.src = "{{ asset('bundles/cryptyohome/images/slide1.gif') }}";
+                            img.alt = "slide1";
+                            var popover = document.getElementsByClassName('popover-content')[0];
+                            popover.innerHTML = "Inscrivez-vous sur Crypt Your Octect, une application qui vous permet d'envoyer des messages cryptés à vos amis.";
+                            var pop = document.getElementsByClassName('popover-title')[0];
+                            pop.innerHTML = "Bienvenue sur Crypt Your Octect";
+                        }
+                    }
 
-
-                </div>
-
+                </script>
 
 
 
@@ -129,4 +119,3 @@
         </div>
 
 {% endblock %}
-
