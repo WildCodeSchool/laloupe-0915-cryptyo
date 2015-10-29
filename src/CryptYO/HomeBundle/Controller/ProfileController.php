@@ -19,6 +19,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use CryptYO\HomeBundle\Entity\Message;
 use CryptYO\HomeBundle\Form\Type\MessageType;
 use CryptYO\HomeBundle\Form\Type\FriendsType;
+use Symfony\Component\Validator\Constraints\Null;
 
 /**
  * Controller managing the user profile
@@ -54,12 +55,13 @@ class ProfileController extends BaseController
             throw new AccessDeniedException('This user does not have access to this section.');
         }
 
+
+
         // On récupère tous les messages de l'utilisateur connecté
         $userName = $user->getUsername();
         $em = $this->getDoctrine()->getManager();
         $userMessages = $em->getRepository('CryptYOHomeBundle:Message')->findBy(array('destinataire' => $userName));
-        $showFriend = $em->getRepository('CryptYOHomeBundle:Friends')->findAll();
-
+        $showFriend = $em->getRepository('CryptYOHomeBundle:Friends')->findBy(array('friendOne' => $user));
 
 
         return $this->render('FOSUserBundle:Profile:show.html.twig', array(
@@ -68,7 +70,7 @@ class ProfileController extends BaseController
             'decryptForm' => $decryptForm->createView(),
             'messages' => $userMessages,
             'friendsForm' => $friendsForm->createView(),
-            'showFriend' => $showFriend
+            'showFriends' => $showFriend
         ));
     }
 
@@ -153,15 +155,52 @@ class ProfileController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $friendOne = $friend->getFriendOne();
+            $friendString = $friend->getFriendTwo();
+            $friendVerify = $em->getRepository('CryptYOHomeBundle:User')->findOneBy(array('username' => $friendString));
+            $userFriends = $em->getRepository('CryptYOHomeBundle:Friends')->findBy(array('friendOne' => $friendOne));
 
+            if ($friendVerify){
+                $friendStringToId = $friendVerify->getId();
+
+                $existFriend = 0;
+                foreach ($userFriends as $key => $valeur){
+                    if ($valeur->getFriendTwo() == $friendStringToId){
+                        $existFriend = 1;
+                    }
+                }
+
+                if ($existFriend == 1) {
+                    $this->addFlash(
+                        'addami',
+                        'Vous êtes déjà ami avec '.$friendString
+                    );
+                }
+                else {
+                    $this->addFlash(
+                        'addami',
+                        'Ami bien ajouté !'
+                    );
+
+                    $friend->setFriendTwo($friendStringToId);
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($friend);
+                    $em->flush();
+                }
+            }
+            else{
+                $this->addFlash(
+                    'addami',
+                    'Utilisateur inexistant'
+                );
+            }
+        }
+        else {
             $this->addFlash(
                 'addami',
-                'Ami bien ajouté !'
+                'Champ invalide'
             );
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($friend);
-            $em->flush();
         }
 
         return $this->redirect($this->generateUrl('fos_user_profile_show'));

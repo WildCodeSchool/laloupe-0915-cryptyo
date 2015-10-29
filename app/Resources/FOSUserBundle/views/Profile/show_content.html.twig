@@ -1,5 +1,6 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
+ {{ dump(showFriends) }}
 <div class="container">
 
     <div class="row">
@@ -23,6 +24,10 @@
             </div>
             <div class="row profile__zoneTexte">
                 <h4> <i class="fa fa-users"></i> Mes amis</h4>
+                {% for showFriend in showFriends %}
+                    <br />
+                {% endfor %}
+
                 {% for flashMessage in app.session.flashbag.get('addami') %}
                     <div class="flash-notice alert alert-success" role="alert">
                         {{ flashMessage }}
