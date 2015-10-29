@@ -157,6 +157,7 @@ table {
     padding-top:0;
 }
 .profile__zoneTexte {
+    text-align: center;
     background-color: #C8E6F5;
     margin-top: 20px;
     padding: 10px;
@@ -269,4 +270,8 @@ table {
 }
 .message__recu {
     margin-top: 20px;
+}
+
+.username__format{
+    color: #0C83BF;
 }

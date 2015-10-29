@@ -26,7 +26,9 @@
                 {% for showFriend in showFriends %}
                     {% for allusers in users %}
                         {% if allusers.id == showFriend.friendTwo %}
+                            <div class="username__format">
                     {{ allusers.username }} <br />
+                            </div>
                         {% endif %}
                         {% endfor %}
                 {% endfor %}
@@ -58,7 +60,7 @@
                     <p>{{ form_widget(friendsForm.friendOne, {'value' : user.id}) }}</p>
                 </div>
                 <p>{{ form_widget(friendsForm.friendTwo, {'attr': {'placeholder':'Nom de l\'ami...'}}) }}</p>
-                <p>{{ form_widget(friendsForm.save, {'label': 'Ajouter', 'attr': {'class' : 'input__save'}}) }}</p>
+                <p>{{ form_widget(friendsForm.save, {'label': 'Ajouter', 'attr': {'class' : 'btn btn-primary btn-send center'}}) }}</p>
                 {{ form_end(friendsForm) }}
             </div>
         </div>
