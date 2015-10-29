@@ -85,3 +85,6 @@ function explode(){
     $( "#flashSendMessage" ).hide(1000);
     console.log('it work');
 }setTimeout(explode, 5000);
+
+
+

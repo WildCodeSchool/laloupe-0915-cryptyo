@@ -33,7 +33,22 @@
 
 
                 {% for flashMessage in app.session.flashbag.get('addami') %}
-                    <div class="flash-notice alert alert-success" role="alert">
+                    <div id="flashSendMessage" class="flash-notice alert alert-success" role="alert">
+                        {{ flashMessage }}
+                    </div>
+                {% endfor %}
+                {% for flashMessage in app.session.flashbag.get('noami') %}
+                    <div id="flashSendMessage" class="flash-notice alert alert-info" role="alert">
+                        {{ flashMessage }}
+                    </div>
+                {% endfor %}
+                {% for flashMessage in app.session.flashbag.get('notexist') %}
+                    <div id="flashSendMessage" class="flash-notice alert alert-danger" role="alert">
+                        {{ flashMessage }}
+                    </div>
+                {% endfor %}
+                {% for flashMessage in app.session.flashbag.get('error') %}
+                    <div id="flashSendMessage" class="flash-notice alert alert-danger" role="alert">
                         {{ flashMessage }}
                     </div>
                 {% endfor %}

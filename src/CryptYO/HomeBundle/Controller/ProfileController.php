@@ -183,7 +183,7 @@ class ProfileController extends BaseController
 
                 if ($existFriend == 1) {
                     $this->addFlash(
-                        'addami',
+                        'noami',
                         'Vous êtes déjà ami avec '.$friendString
                     );
                 }
@@ -202,14 +202,14 @@ class ProfileController extends BaseController
             }
             else{
                 $this->addFlash(
-                    'addami',
+                    'notexist',
                     'Utilisateur inexistant'
                 );
             }
         }
         else {
             $this->addFlash(
-                'addami',
+                'error',
                 'Champ invalide'
             );
         }
