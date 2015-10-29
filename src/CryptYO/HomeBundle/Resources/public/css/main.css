@@ -83,6 +83,7 @@ table {
     border-radius: 6px;
     padding-left: 5px;
     margin-bottom: 5px;
+    color: #333;
 }
 .banniere .home__form label {
     color: white;
