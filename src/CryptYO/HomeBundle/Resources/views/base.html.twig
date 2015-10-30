@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}{% endblock %}</title>
+        {% block stylesheets %}
+            <link href="{{ asset('bundles/cryptyohome/css/bootstrap.min.css') }}" rel="stylesheet">
+            <link href="{{ asset('bundles/cryptyohome/css/main.css') }}" rel="stylesheet">
+            <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+            <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+            <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+
+    <div class="row banniere">
+
+        {% if app.user and (app.request.attributes.get('_route') == 'crypt_yo_home_homepage') %}
+            <div class="col-md-5 logo">
+                <a href="{{ path('fos_user_profile_show') }}">
+                    <img class="header__logo" src="{{ asset('bundles/cryptyohome/images/cryptyo1.png') }}" alt="...">
+                    <h1> Crypt Your Octet </h1>
+                </a>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-4 header__logged">
+                <h3>Bienvenue {{ app.user.username }}</h3>
+                <h5><a href="{{ path('fos_user_profile_show') }}">Connexion à votre espace</a></h5>
+            </div>
+        {% elseif app.user %}
+            <div class="col-md-5 logo">
+                <a href="{{ path('fos_user_profile_show') }}">
+                    <img class="header__logo" src="{{ asset('bundles/cryptyohome/images/cryptyo1.png') }}" alt="...">
+                    <h1> Crypt Your Octet </h1>
+                </a>
+            </div>
+            <div class="col-md-4"></div>
+            <div class="col-md-2 header__logout">
+                <a href=" {{ path('fos_user_security_logout') }}"><i class="fa fa-sign-out"></i> Déconnexion</a>
+            </div>
+        {% else %}
+            <div class="col-md-4 logo">
+                <a href="{{ path('fos_user_profile_show') }}">
+                    <img class="header__logo" src="{{ asset('bundles/cryptyohome/images/cryptyo1.png') }}" alt="...">
+                    <h1> Crypt Your Octet </h1>
+                </a>
+            </div>
+        <div class="col-md-3 text-center">
+            <a href="{{ path('fos_user_registration_register') }}"> <button class="btn btn-danger btn-inscr">Je m'inscris</button> </a>
+        </div>
+
+        <div class="col-md-3 home__form">
+            <form action="{{ path("fos_user_security_check") }}" method="post">
+                <input type="hidden" name="_csrf_token" value="{{ fos_csrf_provider.generateCsrfToken('authenticate') }}" />
+                <label>Nom d'utilisateur :</label>
+                <input type="text" name="_username" required="required" /></br>
+
+                <label>Mot de passe :</label>
+                <input type="password" name="_password" required="required" style="margin-right: -3px"/>
+
+                <br/>
+                <button class="btn btn-primary btn__retour" type="submit"><i class="fa fa-sign-in"></i> Se connecter </button>
+            </form>
+        </div>
+
+            <div class="col-md-1"></div>
+
+        {% endif %}
+    </div>
+        {% block body %}{% endblock %}
+        {% block javascripts %}
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+            <script src="{{ asset('bundles/cryptyohome/js/bootstrap.min.js') }}"></script>
+            <script src="{{ asset('bundles/cryptyohome/js/putIdValue.js') }}"></script>
+        {% endblock %}
+    </body>
+</html>
