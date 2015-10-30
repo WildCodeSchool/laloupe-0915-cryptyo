@@ -23,8 +23,34 @@
             </div>
             <div class="row profile__zoneTexte">
                 <h4> <i class="fa fa-users"></i> Mes amis</h4>
+                {% for showFriend in showFriends %}
+                    {% for allusers in users %}
+                        {% if allusers.id == showFriend.friendTwo %}
+                            <div class="username__format">
+                    {{ allusers.username }} <br />
+                            </div>
+                        {% endif %}
+                        {% endfor %}
+                {% endfor %}
+
+
                 {% for flashMessage in app.session.flashbag.get('addami') %}
-                    <div class="flash-notice alert alert-success" role="alert">
+                    <div id="flashSendMessage" class="flash-notice alert alert-success" role="alert">
+                        {{ flashMessage }}
+                    </div>
+                {% endfor %}
+                {% for flashMessage in app.session.flashbag.get('noami') %}
+                    <div id="flashSendMessage" class="flash-notice alert alert-info" role="alert">
+                        {{ flashMessage }}
+                    </div>
+                {% endfor %}
+                {% for flashMessage in app.session.flashbag.get('notexist') %}
+                    <div id="flashSendMessage" class="flash-notice alert alert-danger" role="alert">
+                        {{ flashMessage }}
+                    </div>
+                {% endfor %}
+                {% for flashMessage in app.session.flashbag.get('error') %}
+                    <div id="flashSendMessage" class="flash-notice alert alert-danger" role="alert">
                         {{ flashMessage }}
                     </div>
                 {% endfor %}
@@ -34,7 +60,7 @@
                     <p>{{ form_widget(friendsForm.friendOne, {'value' : user.id}) }}</p>
                 </div>
                 <p>{{ form_widget(friendsForm.friendTwo, {'attr': {'placeholder':'Nom de l\'ami...'}}) }}</p>
-                <p>{{ form_widget(friendsForm.save, {'label': 'Ajouter', 'attr': {'class' : 'input__save'}}) }}</p>
+                <p>{{ form_widget(friendsForm.save, {'label': 'Ajouter', 'attr': {'class' : 'btn btn-primary btn-send center'}}) }}</p>
                 {{ form_end(friendsForm) }}
             </div>
         </div>
@@ -156,4 +182,3 @@
         </div>
     </div>
 </div>
-
