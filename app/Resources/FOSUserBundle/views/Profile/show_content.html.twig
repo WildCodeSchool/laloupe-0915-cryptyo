@@ -59,8 +59,8 @@
                 <div class="hidden">
                     <p>{{ form_widget(friendsForm.friendOne, {'value' : user.id}) }}</p>
                 </div>
-                <p>{{ form_widget(friendsForm.friendTwo, {'attr': {'placeholder':'Nom de l\'ami...'}}) }}</p>
-                <p>{{ form_widget(friendsForm.save, {'label': 'Ajouter', 'attr': {'class' : 'btn btn-primary btn-send center'}}) }}</p>
+                <p id="addAmi">{{ form_widget(friendsForm.friendTwo, {'attr': {'placeholder':'Nom de l\'ami...'}}) }}
+                    {{ form_widget(friendsForm.save, {'label': 'Ajouter', 'attr': {'class' : 'btn btn-primary btn-send center btn__addAmi'}}) }}</p>
                 {{ form_end(friendsForm) }}
             </div>
         </div>
@@ -182,3 +182,8 @@
         </div>
     </div>
 </div>
+
+<script>
+    var oldHTML = document.getElementById('message_save').innerHTML;
+    document.getElementById('message_save').innerHTML = "<i class='fa fa-plus'></i> " + oldHTML;
+</script>

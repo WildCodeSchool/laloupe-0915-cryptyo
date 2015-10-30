@@ -215,6 +215,14 @@ table {
 .btn__record {
     margin-top: 10px;
 }
+.btn__addAmi {
+    display: inline-block;
+    margin-top: 0px;
+    margin-left: 3px;
+}
+#addAmi {
+    margin-top:20px;
+}
 
 .fields__register {
     display: block;
