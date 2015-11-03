@@ -11,11 +11,7 @@ class MessageType extends AbstractType
     {
         $builder
             ->add('auteur', 'text')
-            ->add('destinataire', 'choice')
-
-            /*->add('destinataire', 'entity', array(
-                'class' => 'CryptYOHomeBundle:User', // Utiliser une entité comme choix multiple.
-            ))*/
+            ->add('destinataire') // Utiliser une entité comme choix multiple.
             ->add('message', 'textarea')
             ->add('save', 'submit')
         ;
