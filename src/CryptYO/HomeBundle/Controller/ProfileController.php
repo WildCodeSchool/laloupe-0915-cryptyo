@@ -119,17 +119,7 @@ class ProfileController extends BaseController
             $em->persist($message);
             $em->flush();
 
-            // On récupere les adresses mail pour le mailing
-            $destinataire = $message->getDestinataire();
-            $auteur = $message->getAuteur();
-            $id = $message->getId();
-            $currentMessage = $message->getMessage();
-            $userManager = $this->get('fos_user.user_manager');
-            $mailDestinataire = $userManager->findUserByUsername($destinataire)->getEmail();
-            $mailAuteur = $userManager->findUserByUsername($auteur)->getEmail();
-            $to = array($mailAuteur, $mailDestinataire);
-
-            $this->sendMail($auteur, $to, $sel, $currentMessage, $id);
+            $this->sendMail($message, $sel);
 
 
             return $this->redirect($this->generateUrl('fos_user_profile_show'));
@@ -147,7 +137,18 @@ class ProfileController extends BaseController
         return $this->redirect($this->generateUrl('fos_user_profile_show'));
     }
 
-    private function sendMail($auteur, $to, $sel, $currentMessage, $id){
+    private function sendMail($message, $sel){
+
+        // On récupere les adresses mail pour le mailing
+        $destinataire = $message->getDestinataire();
+        $auteur = $message->getAuteur();
+        $id = $message->getId();
+        $currentMessage = $message->getMessage();
+        $userManager = $this->get('fos_user.user_manager');
+        $mailDestinataire = $userManager->findUserByUsername($destinataire)->getEmail();
+        $mailAuteur = $userManager->findUserByUsername($auteur)->getEmail();
+        $to = array($mailAuteur, $mailDestinataire);
+
         $sendMessage = \Swift_Message::newInstance()
             ->setSubject($auteur.' vous a envoyé un message !!!')
             ->setFrom('CryptYO@gmail.com')
