@@ -64,3 +64,4 @@ Pour contribuer au projet, il te suffis de le forker sur [Github](https://github
 Merci de commenter clairement tes commits.
 
 N'hésite pas à PR tes avancées régulierement.
+
