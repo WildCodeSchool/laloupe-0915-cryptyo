@@ -1,4 +1,5 @@
 {
+    "description": "Crypt Your Octet",
     "name": "erwan/crypt-yo",
     "license": "proprietary",
     "type": "project",
