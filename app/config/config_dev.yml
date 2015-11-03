@@ -44,7 +44,3 @@ monolog:
 assetic:
     use_controller: true
 
-swiftmailer:
-    transport: gmail
-    username: cryptyo@gmail.com
-    password: wcs.project
