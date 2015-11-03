@@ -1,4 +1,3 @@
-
 crypt_yo_home:
     resource: "@CryptYOHomeBundle/Resources/config/routing.yml"
     prefix:   /
