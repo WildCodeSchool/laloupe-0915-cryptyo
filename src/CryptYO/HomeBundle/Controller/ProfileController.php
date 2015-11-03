@@ -68,11 +68,6 @@ class ProfileController extends BaseController
         $showFriend = $em->getRepository('CryptYOHomeBundle:Friends')->findBy(array('friendOne' => $user));
         $allusers = $em->getRepository('CryptYOHomeBundle:User')->findAll(array('id'));
 
-        /*
-        foreach ($showFriend as $key => $value){
-            return $object = $value;
-        }*/
-
         return $this->render('FOSUserBundle:Profile:show.html.twig', array(
             'user' => $user,
             'form' => $form->createView(),
