@@ -109,7 +109,6 @@ class ProfileController extends BaseController
             $encryptedMessage = $encrypted[0];
             $sel = $encrypted[1]; // on recupere le sel
             $message->setMessage($encryptedMessage);
-            //
 
             $this->addFlash(
                 'notice',
@@ -130,23 +129,8 @@ class ProfileController extends BaseController
             $mailAuteur = $userManager->findUserByUsername($auteur)->getEmail();
             $to = array($mailAuteur, $mailDestinataire);
 
-            $sendMessage = \Swift_Message::newInstance()
-                ->setSubject($auteur.' vous a envoyé un message !!!')
-                ->setFrom('CryptYO@gmail.com')
-                ->setTo($to)
-                ->setBody(
-                    $this->renderView(
-                        'Emails/receivedMessage.html.twig',
-                        array(
-                            'sel' => $sel,
-                            'auteur' => $auteur,
-                            'message' => $currentMessage,
-                            'id' => $id
-                        )
-                    ),
-                    'text/html'
-                );
-            $this->get('mailer')->send($sendMessage);
+            $this->sendMail($auteur, $to, $sel, $currentMessage, $id);
+
 
             return $this->redirect($this->generateUrl('fos_user_profile_show'));
         }
@@ -158,61 +142,66 @@ class ProfileController extends BaseController
         $form = $this->createForm(new FriendsType(), $friend);
         $form->handleRequest($request);
 
+        $this->checkMessage($form, $friend);
+
+        return $this->redirect($this->generateUrl('fos_user_profile_show'));
+    }
+
+    private function sendMail($auteur, $to, $sel, $currentMessage, $id){
+        $sendMessage = \Swift_Message::newInstance()
+            ->setSubject($auteur.' vous a envoyé un message !!!')
+            ->setFrom('CryptYO@gmail.com')
+            ->setTo($to)
+            ->setBody(
+                $this->renderView(
+                    'Emails/receivedMessage.html.twig',
+                    array(
+                        'sel' => $sel,
+                        'auteur' => $auteur,
+                        'message' => $currentMessage,
+                        'id' => $id
+                    )
+                ),
+                'text/html'
+            );
+        $this->get('mailer')->send($sendMessage);
+    }
+
+
+    private function checkMessage($form, $friend){
+
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $friendOne = $friend->getFriendOne();
-            $friendString = $friend->getFriendTwo();
+            $friendOne = $friend->getFriendOne(); $friendString = $friend->getFriendTwo();
             $friendVerify = $em->getRepository('CryptYOHomeBundle:User')->findOneBy(array('username' => $friendString));
             $userFriends = $em->getRepository('CryptYOHomeBundle:Friends')->findBy(array('friendOne' => $friendOne));
 
             if ($friendVerify){
                 $friendStringToId = $friendVerify->getId();
-
                 $existFriend = 0;
                 foreach ($userFriends as $key => $valeur){
                     if ($valeur->getFriendTwo() == $friendStringToId){
-                        $existFriend = 1;
-                    }
-                }
-
-                if ($existFriend == 1) {
+                        $existFriend = 1;}
+                } if ($existFriend == 1) {
                     $this->addFlash(
-                        'noami',
-                        'Vous êtes déjà ami avec '.$friendString
-                    );
-                }
-                else {
-
+                        'noami', 'Vous êtes déjà ami avec '.$friendString);
+                } else {
                     $this->addFlash(
-                        'addami',
-                        'Ami bien ajouté !'
-                    );
-
+                        'addami', 'Ami bien ajouté !');
                     $friend->setFriendTwo($friendStringToId);
                     $em = $this->getDoctrine()->getManager();
                     $em->persist($friend);
                     $em->flush();
                 }
-            }
-            else{
+            } else{
                 $this->addFlash(
-                    'notexist',
-                    'Utilisateur inexistant'
-                );
+                    'notexist', 'Utilisateur inexistant');
             }
-        }
-        else {
+        } else {
             $this->addFlash(
-                'error',
-                'Champ invalide'
-            );
+                'error', 'Champ invalide' );
         }
-
-
-        return $this->redirect($this->generateUrl('fos_user_profile_show'));
-
     }
-
 
 
     private function decryptMessage($cryptedMessage, $sel)
