@@ -22,7 +22,6 @@ use CryptYO\HomeBundle\Form\Type\FriendsType;
 
 
 
-use Symfony\Component\Validator\Constraints\Null;
 
 
 /**
@@ -67,11 +66,6 @@ class ProfileController extends BaseController
         $userMessages = $em->getRepository('CryptYOHomeBundle:Message')->findBy(array('destinataire' => $userName));
         $showFriend = $em->getRepository('CryptYOHomeBundle:Friends')->findBy(array('friendOne' => $user));
         $allusers = $em->getRepository('CryptYOHomeBundle:User')->findAll(array('id'));
-
-        /*
-        foreach ($showFriend as $key => $value){
-            return $object = $value;
-        }*/
 
         return $this->render('FOSUserBundle:Profile:show.html.twig', array(
             'user' => $user,
