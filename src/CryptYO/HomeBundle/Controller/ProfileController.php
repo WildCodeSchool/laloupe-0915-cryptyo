@@ -14,6 +14,7 @@ namespace CryptYO\HomeBundle\Controller;
 use CryptYO\HomeBundle\Entity\Friends;
 use FOS\UserBundle\Controller\ProfileController as BaseController;
 use FOS\UserBundle\Model\UserInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use CryptYO\HomeBundle\Entity\Message;
@@ -26,18 +27,25 @@ use CryptYO\HomeBundle\Form\Type\FriendsType;
 
 /**
  * Controller managing the user profile
- *
- * @author Christophe Coevoet <stof@notk.org>
+ * And send messages
  */
 class ProfileController extends BaseController
 {
     public function showAction()
     {
+
+        $user = $this->getUser();
+        if (!is_object($user) || !$user instanceof UserInterface) {
+            throw new AccessDeniedException('This user does not have access to this section.');
+        }
+
+        // Generation du formulaire d'envoi de messages
         $form = $this->createForm(new MessageType(), new Message(), array(
             'action' => $this->generateUrl('crypt_yo_home_send_message'),
             'method' => 'POST',
         ));
 
+        // Formulaire pour décrypter un message
         $data = array();
         $decryptForm = $this->createFormBuilder($data)
             ->setAction($this->generateUrl('crypt_yo_home_decrypt_message'))
@@ -47,23 +55,19 @@ class ProfileController extends BaseController
             ->add('save', 'submit')
             ->getForm();
 
-
+        // Formulaire pour ajouter un ami
         $friendsForm = $this->createForm(new FriendsType(), new Friends(), array(
             'action' => $this->generateUrl('crypt_yo_add_friends'),
             'method' => 'POST',
         ));
-
-        $user = $this->getUser();
-        if (!is_object($user) || !$user instanceof UserInterface) {
-            throw new AccessDeniedException('This user does not have access to this section.');
-        }
-
 
 
         // On récupère tous les messages de l'utilisateur connecté
         $userName = $user->getUsername();
         $em = $this->getDoctrine()->getManager();
         $userMessages = $em->getRepository('CryptYOHomeBundle:Message')->findBy(array('destinataire' => $userName));
+
+        // On récupère la liste d'amis
         $showFriend = $em->getRepository('CryptYOHomeBundle:Friends')->findBy(array('friendOne' => $user));
         $allUsers = $em->getRepository('CryptYOHomeBundle:User')->findAll(array('id'));
 
@@ -78,23 +82,22 @@ class ProfileController extends BaseController
         ));
     }
 
+    // Décrypte le message selectionné avec le sel correspondant
     public function decryptAction(Request $request)
     {
         $resultForm = $request->request->get('form');
         $resultId = $resultForm['id'];
-        $resultSel = $resultForm['sel'];
+        $sel = $resultForm['sel'];
 
         $em = $this->getDoctrine()->getManager();
         $message = $em->getRepository('CryptYOHomeBundle:Message')->findOneBy(array('id' => $resultId));
-        $cryptedMessage = $message->getMessage();
-
-        $decrypted = $this->decryptMessage($cryptedMessage, $resultSel);
 
         return $this->render('FOSUserBundle:Profile:decrypted.html.twig', array(
-            'decrypted' => $decrypted
+            'decrypted' => $message->decryptMessage($sel)
         ));
     }
 
+    // Créer un nouveau message
     public function createMessageAction(Request $request)
     {
         $message = new Message();
@@ -104,17 +107,14 @@ class ProfileController extends BaseController
         if ($form->isValid()) {
 
             // Crypt du message
-            $previousMessage = $message->getMessage();
-            $encrypted = $this->cryptMessage($previousMessage);
-            $encryptedMessage = $encrypted[0];
-            $sel = $encrypted[1]; // on recupere le sel
-            $message->setMessage($encryptedMessage);
+            $sel = $message->cryptMessage();
 
             $this->addFlash(
                 'notice',
                 'Message bien envoyé !'
             );
 
+            // On enregistre le message crypté dans la base de données
             $em = $this->getDoctrine()->getManager();
             $em->persist($message);
             $em->flush();
@@ -205,52 +205,6 @@ class ProfileController extends BaseController
     }
 
 
-    private function decryptMessage($cryptedMessage, $sel)
-    {
-        $data = base64_decode($cryptedMessage);
-        $iv = substr($data, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC));
 
-        $decrypted = rtrim(
-            mcrypt_decrypt(
-                MCRYPT_RIJNDAEL_128,
-                hash('sha256', $sel, true),
-                substr($data, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC)),
-                MCRYPT_MODE_CBC,
-                $iv
-            ),
-            "\0"
-        );
-
-        return $decrypted;
-    }
-
-    private function cryptMessage($message)
-    {
-        $seed = str_split('abcdefghijklmnopqrstuvwxyz'
-            .'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-            .'0123456789!@#$%^&*()');
-        shuffle($seed);
-        $rand = '';
-        foreach (array_rand($seed, 10) as $k) $rand .= $seed[$k];
-
-        $iv = mcrypt_create_iv(
-            mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC),
-            MCRYPT_DEV_URANDOM
-        );
-
-        $cryptedMessage = base64_encode(
-            $iv .
-            mcrypt_encrypt(
-                MCRYPT_RIJNDAEL_128,
-                hash('sha256', $rand, true),
-                $message,
-                MCRYPT_MODE_CBC,
-                $iv
-            )
-        );
-
-        return array($cryptedMessage, $rand);
-
-    }
 
 }

@@ -12,6 +12,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class HomeController extends Controller
 {
+    /**
+     * Affiche la page d'accueil
+     **/
     public function indexAction()
     {
         return $this->render('CryptYOHomeBundle:Home:index.html.twig');

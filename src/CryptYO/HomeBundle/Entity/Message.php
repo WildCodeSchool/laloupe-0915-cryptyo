@@ -12,6 +12,60 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Message
 {
+
+
+    public function decryptMessage($sel)
+    {
+        $data = base64_decode($this->getMessage());
+        $iv = substr($data, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC));
+
+        $decrypted = rtrim(
+            mcrypt_decrypt(
+                MCRYPT_RIJNDAEL_128,
+                hash('sha256', $sel, true),
+                substr($data, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC)),
+                MCRYPT_MODE_CBC,
+                $iv
+            ),
+            "\0"
+        );
+
+        return $decrypted;
+    }
+
+    public function cryptMessage()
+    {
+        $seed = str_split('abcdefghijklmnopqrstuvwxyz'
+            .'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+            .'0123456789!@#$%^&*()');
+        shuffle($seed);
+        $rand = '';
+        foreach (array_rand($seed, 10) as $k) $rand .= $seed[$k];
+
+        $iv = mcrypt_create_iv(
+            mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC),
+            MCRYPT_DEV_URANDOM
+        );
+
+        $cryptedMessage = base64_encode(
+            $iv .
+            mcrypt_encrypt(
+                MCRYPT_RIJNDAEL_128,
+                hash('sha256', $rand, true),
+                $this->getMessage(),
+                MCRYPT_MODE_CBC,
+                $iv
+            )
+        );
+
+        $this->setMessage($cryptedMessage);
+
+        return $rand;
+
+    }
+
+    // code généré
+
     /**
      * @var integer
      *
